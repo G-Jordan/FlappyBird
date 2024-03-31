@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flappy Bird Project</title>
+  <style>
+    body {
+      background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTi9h0cSu4j_oqzB28iIwKdNR0JHpq-zWIRQw&usqp=CAU");
+      margin: 0;
+      padding: 0;
+      color: gold; /* Text color */
+    }
+
+    .container {
+      border: 3px groove gold; /* Border style */
+      border-radius: 10px; /* Border radius */
+      box-shadow: 0 0 30px gold; /* Box shadow */
+      padding: 20px;
+      margin: 80px auto;
+      margin-bottom: 20px;
+      max-width: 600px; /* Limit container width for better centering */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      background-color: black; /* Background color */
+      text-align: center; /* Center text */
+    }
+
+    .logo {
+      width: 120px;
+      height: auto;
+      cursor: pointer;
+      border: gold groove 3px;
+      border-radius: 17px;
+      padding: 10px;
+      box-shadow: inset 0 0 60px -12px gold, inset 0 0 36px -18px gold; /* Box shadow */
+      margin-right: 10px;
+    }
+
+    .title {
+      font-weight: bold;
+      text-align: center;
+      background-color: rgba(128, 128, 128, 0.5); /* Background color with opacity */
+      padding: 15px;
+      border-radius: 10px;
+      position: relative;
+      width: 100%;
+      margin-bottom: 10px;
+      font-size: 24px;
+    }
+
+    .medals {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 15px;
+      margin: 23px;
+      position: relative;
+    }
+
+    .medal-info {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .medal {
+      text-align: center;
+      margin: 10px;
+    }
+
+    .medal img {
+      width: 50px;
+      height: auto;
+    }
+
+    .medal p {
+      margin-top: 5px;
+      margin-bottom: 0;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      color: gold; /* Text color */
+    }
+
+    .quick-links {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+
+    .quick-links a {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 50px;
+      text-decoration: none;
+    }
+
+    #audio-controls {
+      position: fixed;
+      top: 7px;
+      z-index: 999;
+      background-color: black;
+      margin-right: 10px;
+      padding-right: 5px;
+      padding-top: 13px;
+      box-shadow: gold 0px 30px 60px -12px inset, gold 0px 18px 36px -18px inset;
+      border: 3px groove gold; /* add players hex here */
+      border-radius: 50px;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      top: 8.3%;
+      left: 50%;
+      margin-right: -50%;
+      transform: translate(-50%, -50%);
+    }
+
+    #audio-controls a {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    #audio-controls img {
+      width: 30px;
+      height: 30px;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+
+    #audio-controls img:hover {
+      filter: brightness(80%);
+      display: block;
+    }
+
+    #downloadBtn,
+    #pocketCodeBtn {
+      border: 3px groove green; /* Border style */
+      border-radius: 10px; /* Border radius */
+      box-shadow: 0 0 10px limegreen; /* Box shadow */
+      padding: 15px;
+      margin-top: 20px;
+      margin-bottom: 20px; /* Adjusted margin */
+      background-color: black; /* Background color */
+      color: limegreen; /* Text color */
+      font-weight: bold;
+      cursor: pointer;
+      display: block; /* Make the button a block element */
+      margin-left: auto; /* Center the button */
+      margin-right: auto; /* Center the button */
+      max-width: 250px; /* Limit button width */
+    }
+
+    #downloadBtn:hover,
+    #pocketCodeBtn:hover {
+      background-color: limegreen; /* Background color on hover */
+      color: black; /* Text color on hover */
+    }
+
+    /* Description text */
+    .description {
+      text-align: left; /* Align description text to the left */
+    }
+.custom-alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: black;
+  border: 3px groove lime;
+  box-shadow: 0 0 10px lime;
+  padding: 20px;
+  z-index: 9999;
+  display: none;
+  width: 80%; /* Adjust the width as needed */
+  max-width: 500px; /* Set a maximum width to prevent it from becoming too wide */
+}
+
+.alert-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.alert-message {
+  margin-bottom: 20px;
+}
+
+.close-btn {
+  background-color: black;
+  color: lime;
+  border: groove 3px lime;
+  border-radius: 50px;
+  padding: 8px 20px;
+  cursor: pointer;
+  border-radius: 3px;
+  display: block;
+  margin: 0 auto; /* Center the button */
+}
+  </style>
+</head>
+
+<body onload="loadRandomSong()">
+  <div class="container">
+    <a href="https://share.catrob.at/pocketcode/project/f61191ca-bfa4-4c8c-b6d4-310db4b2027b">
+    <img src="https://img.itch.zone/aW1nLzcyMDIyMjAucG5n/original/Gwnwcs.png" alt="Flappy Bird Logo" class="logo"></a>
+    <button id="downloadBtn">Download Flappy Bird</button>
+    <strong>
+    <p style="color: gold; margin-top: 20px;">Download Size (19.50 MB)</p></strong>
+    <p style="color: gold; margin-top: 20px;">To play this game, you need to have the app Pocket Code installed on your (Android) device.</p>
+<a href="https://catrobat.org">
+    <img src="https://play-lh.googleusercontent.com/df84YTVzbMjeN4UtAvpI0s1r36hUWrsgBeEgqTdeHiwVHGtujlHp4s6VQMevCq4TOcc=w600-h300-pc0xffffff-pd" alt="Pocketcode Logo" class="logo"></a>
+    <a href="https://play.google.com/store/apps/details?id=org.catrobat.catroid" target="_blank" id="pocketCodeBtn">Get Pocket Code</a>
+  </div>
+    <div class="description" style="background: linear-gradient(to bottom, green, black); padding: 20px 20px 40px; border: 3px groove lime; border-radius: 15px; box-shadow: 0 0 20px lime; margin-top: 20px;">
+  <h2>Welcome to the Flappy Bird Extravaganza: Where Learning is a Flap Away!</h2>
+  <h3 style="border: 2px groove lime; padding: 10px; box-shadow: 0 0 10px lime; border-radius: 10px;">Why Flappy Bird is Educational:</h3>
+  <ul>
+    <li>Flappy Bird isn't just your average bird-brained game; it's a flight of fancy into the world of coding!</li>
+    <li>With Pocket Code at its wingtips, Flappy Bird turns coding into a hilarious adventure where even birds can learn to program!</li>
+    <li>Ever dreamed of mastering multiple languages? Well, Flappy Bird's got you covered with support for 13 tongues! You'll be chirping in Chinese and squawking in Spanish in no time!</li>
+    <li>Need to brush up on your communication skills? Share your scores with friends through a user-friendly web page and watch the flock gather!</li>
+  </ul>
+  <h3 style="border: 2px groove lime; padding: 10px; box-shadow: 0 0 10px lime; border-radius: 10px;">Features of Flappy Bird:</h3>
+  <ul>
+    <li>Say goodbye to boring scoreboards! Flappy Bird's scoreboard is so fancy, it's practically wearing a top hat and monocle!</li>
+    <li>Customize your gaming experience with more colors than a peacock's feather collection! Go wild and make those pipes pop!</li>
+    <li>Explore background modes that will make your gaming experience more dynamic than a flock of flamingos on a rollercoaster!</li>
+    <li>With advanced sliders and tap-and-hold functionality, you'll feel like a coding maestro, conducting your birdie symphony!</li>
+  </ul>
+  <h3 style="border: 2px groove lime; padding: 10px; box-shadow: 0 0 10px lime; border-radius: 10px;">Why Pocket Code Rocks:</h3>
+  <ul>
+    <li>Pocket Code is the ultimate wingman for unleashing your creative genius! With its drag-and-drop interface, even a pigeon can learn to code!</li>
+    <li>Who needs a nest when you have Pocket Code? It's your one-stop-shop for creating interactive stories, games, and animations that will make your friends flock to you!</li>
+    <li>Dive into the Catrobat community and join the coding party! It's like a bird feeder for your brain, filled with ideas and inspiration!</li>
+  </ul>
+  <p><strong>Community Guidelines:</strong></p>
+  <ul>
+    <li>This program is released under GPL v3.0, ensuring transparency and collaboration within the community.</li>
+    <li>You may not use this program for profit purposes ever. It's all about sharing the fun!</li>
+    <li>Feel free to remix, learn, and share from the code, but please credit the original creators and programmers when sharing within the Catrobat community.</li>
+    <li>So flap on over, grab your device, and let's soar into the sky of hilarity and learning with Flappy Bird and Pocket Code! It's a feather-ruffling good time waiting to happen!</li>
+  </ul>
+  <p><strong>Notes and credits</strong></p>
+  <ul>
+    <li>Copyright .Gears ( 2013 )</li>
+    <li>Designer : Dong Nguyen</li>
+    <li>Sliders By : VelociFaptR</li>
+    <li>Hex2Rgb By : Guildmarco</li>
+    <li>Catroid : Wolfgang Slany</li>
+    <li>Code by Jordan Smith ( 2023 - 2024)</li>
+  </ul>
+</div>
+  <!-- Footer with quick links -->
+  <footer>
+    Developed by "G Jordan" (2023-2024)
+    <div class="quick-links">
+      <a href="https://www.facebook.com/share/a8bWwRpM5tp2aXnv/?mibextid=qi2Omg" target="_blank">
+        <img src="https://img.icons8.com/fluent/48/000000/facebook-new.png" alt="Facebook Icon">
+      </a>
+      <a href="https://www.instagram.com/g.jordan73?igsh=amprcjA2bTZ3OXFu" target="_blank">
+        <img src="https://img.icons8.com/fluent/48/000000/instagram-new.png" alt="Instagram Icon">
+      </a>
+      <a href="https://www.linkedin.com/in/gjordan73?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+        target="_blank">
+        <img src="https://img.icons8.com/fluent/48/000000/linkedin.png" alt="LinkedIn Icon">
+      </a>
+      <a href="https://youtube.com/@gjordan6692?si=82CTz-CV0Cg5VoJR" target="_blank">
+        <img src="https://img.icons8.com/fluent/48/000000/youtube-play.png" alt="YouTube Icon">
+      </a>
+    </div>
+  </footer>
+
+  <div id="audio-controls">
+    <a href="#" onclick="toggleMute()">
+      <img src="https://img.icons8.com/fluent/48/000000/no-audio--v1.png" alt="Mute">
+    </a>
+    <a href="#" onclick="toggleUnmute()" id="unmute-btn" style="display: none;">
+      <img src="https://img.icons8.com/fluent/48/000000/high-volume--v1.png" alt="Unmute">
+    </a>
+    <a href="#" onclick="playNextSong()">
+      <img src="https://img.icons8.com/fluent/48/000000/circled-right-2--v1.png" alt="Play Next Song">
+    </a>
+  </div>
+  <audio id="background-music" autoplay loop></audio>
+  
+<div id="custom-alert" class="custom-alert">
+  <h2 class="alert-title">Install Instructions</h2>
+  <p id="alert-message" class="alert-message"></p>
+  <button id="close-btn" class="close-btn" onclick="closeAlert()">OK</button>
+</div>
+
+
+  <script>
+    // JavaScript code goes here
+    document.addEventListener('DOMContentLoaded', function() {
+      var downloadBtn = document.getElementById('downloadBtn');
+      downloadBtn.addEventListener('click', function() {
+        window.open("https://3ly.link/1xObX", "_blank");
+
+        // Replace this with your download logic
+showAlert("To get started, ensure Pocketcode is installed on your device. Once installed, launch the Pocketcode app and navigate to the 'My Programs' section. From there, tap the three dots and select 'Import Project.' Locate the FlappyBird.catrobat file in your Downloads folder and import it. Once imported, you're ready to start playing FlappyBird. Enjoy the game!")
+      });
+    });
+
+    // JavaScript functions for audio controls
+    var audioUrls = [
+    "https://github.com/G-Jordan/FlappyBird/raw/main/Ed%20Sheeran%20-%20Perfect%20(Original%20Instrumental)%20(320K).mp3",
+      "https://github.com/G-Jordan/FlappyBird/raw/main/Perfect%20Background%20Music%20for%20Documentary%20Videos%20(320K).mp3",
+      "https://github.com/G-Jordan/FlappyBird/raw/main/Elevator%20Music%20(Kevin%20MacLeod)%20-%20Gaming%20Background%20Music%20(HD)%20(320K).mp3",
+      "https://github.com/G-Jordan/FlappyBird/raw/main/%5Bno%20copyright%20music%5D%20'In%20Dreamland%20'%20background%20music%20(320K).mp3",
+      "https://github.com/G-Jordan/FlappyBird/raw/main/Cool%20Chill%20Lofi%20Background%20Music%20For%20Videos%20(320K).mp3",
+      "https://github.com/G-Jordan/FlappyBird/raw/main/_%20%5BCopyright%20Free%20Chill%20Background%20Music%5D%20-%20_Way%20Home_%20by%20@tokyomusicwalker4038%20%20%20__%20(320K).mp3",
+      "https://github.com/G-Jordan/FlappyBird/raw/main/Calm%20Your%20Anxiety%20(128K).mp3",
+      "https://github.com/G-Jordan/FlappyBird/raw/main/lofi%20songs%20for%20slow%20days%20(128K).mp3",
+      "https://github.com/G-Jordan/FlappyBird/raw/main/%EF%BC%B3%EF%BC%AC%EF%BC%A5%EF%BC%A5%EF%BC%B0%EF%BC%B9%20(128K).mp3",
+      "https://github.com/G-Jordan/FlappyBird/raw/main/%EF%BC%A4%EF%BC%B2%EF%BC%A5%EF%BC%A1%EF%BC%AD%EF%BC%B3%20(64K).mp3"
+    ];
+
+    function loadRandomSong() {
+      var randomIndex = Math.floor(Math.random() * audioUrls.length);
+      var randomSongUrl = audioUrls[randomIndex];
+      var audio = document.getElementById('background-music');
+      audio.src = randomSongUrl;
+      audio.play();
+    }
+
+    function toggleMute() {
+      var audio = document.getElementById('background-music');
+      var muteBtn = document.querySelector('#audio-controls a:first-child');
+      var unmuteBtn = document.querySelector('#audio-controls a:last-child');
+      var nextSongBtn = document.querySelector('#audio-controls a:nth-child(2)');
+
+      audio.muted = !audio.muted;
+
+      muteBtn.style.display = audio.muted ? 'block' : 'none';
+      unmuteBtn.style.display = audio.muted ? 'none' : 'block';
+      nextSongBtn.style.display = audio.muted ? 'none' : 'block';
+    }
+
+    function toggleUnmute() {
+      toggleMute();
+    }
+
+    function playNextSong() {
+      var audio = document.getElementById('background-music');
+      var currentSrc = audio.src;
+      var currentIndex = audioUrls.indexOf(currentSrc);
+
+      var nextIndex = currentIndex === audioUrls.length - 1 ? 0 : currentIndex + 1;
+      var nextAudioUrl = audioUrls[nextIndex];
+
+      audio.src = nextAudioUrl;
+      audio.play();
+    }
+    function showAlert(message) {
+  var alertBox = document.getElementById("custom-alert");
+  var messageElement = document.getElementById("alert-message");
+  messageElement.textContent = message;
+  alertBox.style.display = "block";
+}
+
+function closeAlert() {
+  var alertBox = document.getElementById("custom-alert");
+  alertBox.style.display = "none";
+}
+  </script>
+</body>
+
+</html>
