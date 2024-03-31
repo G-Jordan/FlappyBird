@@ -1,0 +1,6 @@
+To install FlappyBird on your device please make sure you have pocketcode installed first 
+After you have Pocketcode installed go to my programs press the 3dots in the corner 
+click that and select import project 
+the file you just downloaded from the website should be in your main Downloads folder
+find that folder then select FlappyBird.catrobat to import the game into Pocketcode 
+have fun : )
