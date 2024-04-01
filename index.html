@@ -216,6 +216,17 @@
       border-radius:10px;
       box-shadow: 0 0 10px gold;
     }
+    .centervid {
+      display: flex;
+      justify-content: center; /* Center horizontally */
+      align-items: center; /* Center vertically */
+      padding: 7px;
+      margin-top: 10px;
+      background-color: black;
+      border-radius:10px;
+      box-shadow: 0 0 10px gold;
+      border: groove gold 3px;
+    }
   </style>
   </script>
   <!-- Google tag (gtag.js) -->
@@ -246,9 +257,10 @@
     <img src="https://play-lh.googleusercontent.com/df84YTVzbMjeN4UtAvpI0s1r36hUWrsgBeEgqTdeHiwVHGtujlHp4s6VQMevCq4TOcc=w600-h300-pc0xffffff-pd" alt="Pocketcode Logo" class="logo"></a>
     <a href="https://play.google.com/store/apps/details?id=org.catrobat.catroid" target="_blank" id="pocketCodeBtn">Get Pocket Code</a>
   </div>
-  <div>
-    <h3 style="color: gold; display: inline-block;">How To Install Video</h3>
-<iframe width="688" height="387" src="https://www.youtube.com/embed/Jka7_Zch85Y" title="FlappyBird Install Instructions" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  <div class="centervid">
+    <h3 style="color: gold;">How To Install Video</h3></div>
+  <div class="centervid">
+<iframe width="auto" height="auto" src="https://www.youtube.com/embed/Jka7_Zch85Y" title="FlappyBird Install Instructions" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
   </div>
     <div class="description" style="background: linear-gradient(to bottom, green, black); padding: 20px 20px 40px; border: 3px groove lime; border-radius: 15px; box-shadow: 0 0 20px lime; margin-top: 20px;">
   <h2 style="background-color: black; border: groove gold 3px; padding: 10px; box-shadow: 0 0 10px gold; color: gold; border-radius: 10px; display: inline-block;">Welcome to the Flappy Bird Extravaganza: Where Learning is a Flap Away!</h2>
@@ -320,7 +332,7 @@
     </a>
   </div>
   <audio id="background-music" autoplay loop></audio>
-  
+
 <div id="custom-alert" class="custom-alert">
   <h2 class="alert-title">Install Instructions</h2>
   <p id="alert-message" class="alert-message"></p>
