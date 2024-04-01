@@ -373,6 +373,11 @@ function closeAlert() {
   var alertBox = document.getElementById("custom-alert");
   alertBox.style.display = "none";
 }
+    document.getElementById('downloadBtn').addEventListener('click', function() {
+  gtag('event', 'download', {
+    'event_category': 'File Download',
+    'event_label': 'Flappy Bird.catrobat// Replace with the name of your file
+  });
   </script>
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-J7VPC5KVCJ"></script>
