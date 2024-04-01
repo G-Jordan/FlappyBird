@@ -207,8 +207,23 @@
   margin: 0 auto; /* Center the button */
 }
   </style>
+  </script>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-J7VPC5KVCJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-J7VPC5KVCJ');
+</script>
+  <script>
+      document.getElementById('downloadBtn').addEventListener('click', function() {
+  gtag('event', 'download', {
+    'event_category': 'File Download',
+    'event_label': 'Flappy Bird.catrobat'// Replace with the name of your file
+  });
+  </script>
 </head>
-
 <body onload="loadRandomSong()">
   <div class="container">
     <a href="https://share.catrob.at/pocketcode/project/f61191ca-bfa4-4c8c-b6d4-310db4b2027b">
@@ -279,7 +294,6 @@
       </a>
     </div>
   </footer>
-
   <div id="audio-controls">
     <a href="#" onclick="toggleMute()">
       <img src="https://img.icons8.com/fluent/48/000000/no-audio--v1.png" alt="Mute">
@@ -298,8 +312,6 @@
   <p id="alert-message" class="alert-message"></p>
   <button id="close-btn" class="close-btn" onclick="closeAlert()">OK</button>
 </div>
-
-
   <script>
     // JavaScript code goes here
     document.addEventListener('DOMContentLoaded', function() {
