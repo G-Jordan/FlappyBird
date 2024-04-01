@@ -227,6 +227,24 @@
       box-shadow: 0 0 10px gold;
       border: groove gold 3px;
     }
+    .center-container {
+      display: flex;
+      justify-content: center; /* Center horizontally */
+      align-items: center; /* Center vertically */
+    }
+
+    .image-container {
+      padding: 20px;
+      padding-top: 73px;
+      max-width: 100%; 
+      max-height: 100%;
+      margin-bottom: -60px;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto; 
+    }
   </style>
   </script>
   <!-- Google tag (gtag.js) -->
@@ -246,6 +264,11 @@
   </script>
 </head>
 <body onload="loadRandomSong()">
+  <div class="center-container">
+    <div class="image-container">
+      <img src="https://cdn.freebiesupply.com/logos/large/2x/flappy-bird-logo-black-and-white.png" alt="Flappy Bird Logo">
+    </div>
+  </div>
   <div class="container">
     <a href="https://share.catrob.at/pocketcode/project/f61191ca-bfa4-4c8c-b6d4-310db4b2027b">
     <img src="https://img.itch.zone/aW1nLzcyMDIyMjAucG5n/original/Gwnwcs.png" alt="Flappy Bird Logo" class="logo"></a>
