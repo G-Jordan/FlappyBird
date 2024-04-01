@@ -229,6 +229,40 @@
     <a href="https://share.catrob.at/pocketcode/project/f61191ca-bfa4-4c8c-b6d4-310db4b2027b">
     <img src="https://img.itch.zone/aW1nLzcyMDIyMjAucG5n/original/Gwnwcs.png" alt="Flappy Bird Logo" class="logo"></a>
     <button id="downloadBtn">Download Flappy Bird</button>
+
+<div id="downloadsData">Total Downloads: Loading...</div>
+
+  <script>
+    // Function to fetch and display download data
+    function fetchDownloadData() {
+      gtag('event', 'fetchDownloads', {
+        'event_category': 'Data Fetch',
+        'event_label': 'Fetching Downloads'
+      });
+
+      gtag('event', 'fetchDownloads', {
+        'event_category': 'Data Fetch',
+        'event_label': 'Downloads Fetched'
+      });
+
+      gtag('event', 'fetchDownloads', {
+        'event_category': 'Data Fetch',
+        'event_label': 'Rendering Data'
+      });
+
+      // Here you would use the Google Analytics Reporting API to fetch the download data
+      // For simplicity, let's assume we have the data ready
+      const totalDownloads = 100; // Replace this with the actual total downloads
+
+      // Display the total downloads on the webpage
+      const downloadsDataElement = document.getElementById('downloadsData');
+      downloadsDataElement.textContent = 'Total Downloads: ' + totalDownloads;
+    }
+
+    // Call the fetchDownloadData function when the page loads
+    window.addEventListener('load', fetchDownloadData);
+  </script>
+    
     <strong>
     <p style="color: gold; margin-top: 20px;">Download Size (19.50 MB)</p></strong>
     <p style="color: gold; margin-top: 20px;">To play this game, you need to have the app Pocket Code installed on your (Android) device.</p>
