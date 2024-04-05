@@ -2,8 +2,6 @@
 
 <html lang="en">
 
-
-
 <head>
 
   <meta charset="UTF-8">
@@ -384,7 +382,7 @@
 
       padding: 20px;
 
-      padding-top: 73px;
+      padding-top: 100px;
 
       max-width: 100%; 
 
@@ -980,7 +978,7 @@ ul li.playing {
 
   color: greenyellow;
 
-  top: 20px;
+  top: 15px;
 
   left: 50%;
 
@@ -989,10 +987,6 @@ ul li.playing {
   z-index: 1000;
 
   background-color: black;
-
-  box-shadow: gold 0px 30px 60px -12px inset, gold 0px 18px 36px -18px inset;
-
-  border: 3px groove gold;
 
 }
 
@@ -1016,25 +1010,11 @@ ul li.playing {
 
 .floating-button {
 
-  position: fixed;
-
-  color: greenyellow;
-
-  top: 20px;
-
-  left: 50%;
-
-  transform: translateX(-50%);
-
-  z-index: 1000;
-
-  background-color: black;
-
-  border: 3px groove gold;
-
   border-radius: 50%;
 
-  padding: 10px;
+  padding: 3px;
+
+  box-shadow: 0 0 10px gold;
 
 }
 
@@ -1060,11 +1040,13 @@ ul li.playing {
 
   padding: 5px;
 
+  margin-top: 50px;
+
   box-shadow: 0 0 10px gold;
 
   z-index: 999;
 
-overflow: auto; /* Add this line */
+  overflow: auto; /* Add this line */
 
 }
 
@@ -1144,6 +1126,38 @@ overflow: auto; /* Add this line */
 
     }
 
+#queueIcon {
+
+  
+
+  box-shadow: gold 0px 30px 60px -12px inset, gold 0px 18px 36px -18px inset;
+
+  border: groove gold 3px;
+
+  border-radius: 50%;
+
+  padding: 15px;
+
+  /* Style for the default music queue icon */
+
+}
+
+
+
+#toggleButton:checked + .floating-button #queueIcon {
+
+  box-shadow: red 0px 30px 60px -12px inset, red 0px 18px 36px -18px inset;
+
+  border: 3px groove gold;
+
+  border-radius: 50%;
+
+  padding: 15px;
+
+  /* Style for the music queue icon when the checkbox is checked */
+
+}
+
 /* Add other styles for the wrapper as needed */
 
   </style>
@@ -1204,7 +1218,7 @@ overflow: auto; /* Add this line */
 
     <p style="color: gold; margin-top: 20px;">Download Size (19.50 MB)</p></strong>
 
-    <p style="color: gold; margin-top: 20px;">To play this game, you need to have the app Pocket Code installed on your (Android) device.</p>
+    <p style="color: gold; margin-top: 20px; padding-bottom: 37px;">To play this game, you need to have the app Pocket Code installed on your (Android) device.</p>
 
 <a href="https://catrobat.org">
 
@@ -1398,7 +1412,7 @@ function closeAlert() {
 
 <input type="checkbox" id="toggleButton" class="floating-button">
 
-<label for="toggleButton" class="floating-button"><i class="material-icons">queue_music</i></label>
+<label for="toggleButton" class="floating-button"><i id="queueIcon" class="material-icons">queue_music</i></label>
 
 
 
@@ -2368,7 +2382,40 @@ const toggleButton = document.getElementById("toggleButton");
 
 </body>
 
+<script>
 
+document.addEventListener('DOMContentLoaded', function() {
+
+  // Select the checkbox and the icon
+
+  const toggleButton = document.getElementById('toggleButton');
+
+  const queueIcon = document.getElementById('queueIcon');
+
+
+
+  // Add event listener to the checkbox
+
+  toggleButton.addEventListener('change', function() {
+
+    if (toggleButton.checked) {
+
+      // Change the icon to exit_to_app when checkbox is checked
+
+      queueIcon.textContent = 'exit_to_app';
+
+    } else {
+
+      // Change the icon back to queue_music when checkbox is unchecked
+
+      queueIcon.textContent = 'queue_music';
+
+    }
+
+  });
+
+});
+
+</script>
 
 </html>
-
