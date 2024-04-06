@@ -1,3261 +1,2070 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html lang="en">
-
-
-
-<head>
-
-  <meta charset="UTF-8">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>FlappyBird</title>
-
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-  <style>
-
-    body {
-
-      background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTi9h0cSu4j_oqzB28iIwKdNR0JHpq-zWIRQw&usqp=CAU");
-
-      margin: 0;
-
-      padding: 0;
-
-      color: gold;
-
-      /* Text color */
-
-    }
-
-
-
-    .container {
-
-      border: 3px groove gold;
-
-      /* Border style */
-
-      border-radius: 10px;
-
-      /* Border radius */
-
-      box-shadow: 0 0 30px gold;
-
-      /* Box shadow */
-
-      padding: 20px;
-
-      margin: 80px auto;
-
-      margin-bottom: 20px;
-
-      max-width: 600px;
-
-      /* Limit container width for better centering */
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      flex-wrap: wrap;
-
-      background-color: black;
-
-      /* Background color */
-
-      text-align: center;
-
-      /* Center text */
-
-    }
-
-
-
-    .logo {
-
-      width: 120px;
-
-      height: auto;
-
-      cursor: pointer;
-
-      border: gold groove 3px;
-
-      border-radius: 17px;
-
-      padding: 10px;
-
-      box-shadow: inset 0 0 60px -12px gold, inset 0 0 36px -18px gold;
-
-      /* Box shadow */
-
-      margin-right: 10px;
-
-    }
-
-
-
-    .title {
-
-      font-weight: bold;
-
-      text-align: center;
-
-      background-color: rgba(128, 128, 128, 0.5);
-
-      /* Background color with opacity */
-
-      padding: 15px;
-
-      border-radius: 10px;
-
-      position: relative;
-
-      width: 100%;
-
-      margin-bottom: 10px;
-
-      font-size: 24px;
-
-    }
-
-
-
-    .medals {
-
-      display: flex;
-
-      justify-content: center;
-
-      align-items: center;
-
-      flex-direction: column;
-
-      padding: 15px;
-
-      margin: 23px;
-
-      position: relative;
-
-    }
-
-
-
-    .medal-info {
-
-      display: flex;
-
-      justify-content: space-around;
-
-      align-items: center;
-
-      margin-top: 10px;
-
-    }
-
-
-
-    .medal {
-
-      text-align: center;
-
-      margin: 10px;
-
-    }
-
-
-
-    .medal img {
-
-      width: 50px;
-
-      height: auto;
-
-    }
-
-
-
-    .medal p {
-
-      margin-top: 5px;
-
-      margin-bottom: 0;
-
-    }
-
-
-
-    footer {
-
-      text-align: center;
-
-      margin-top: 50px;
-
-      color: gold;
-
-      /* Text color */
-
-    }
-
-
-
-    .quick-links {
-
-      display: flex;
-
-      justify-content: space-around;
-
-      margin-top: 20px;
-
-    }
-
-
-
-    .quick-links a {
-
-      display: inline-block;
-
-      width: 50px;
-
-      height: 50px;
-
-      border-radius: 50%;
-
-      text-align: center;
-
-      line-height: 50px;
-
-      text-decoration: none;
-
-    }
-
-
-
-    #downloadBtn,
-
-    #pocketCodeBtn {
-
-      border: 3px groove green;
-
-      /* Border style */
-
-      border-radius: 10px;
-
-      /* Border radius */
-
-      box-shadow: 0 0 10px limegreen;
-
-      /* Box shadow */
-
-      padding: 15px;
-
-      margin-top: 20px;
-
-      margin-bottom: 20px;
-
-      /* Adjusted margin */
-
-      background-color: black;
-
-      /* Background color */
-
-      color: limegreen;
-
-      /* Text color */
-
-      font-weight: bold;
-
-      cursor: pointer;
-
-      display: block;
-
-      /* Make the button a block element */
-
-      margin-left: auto;
-
-      /* Center the button */
-
-      margin-right: auto;
-
-      /* Center the button */
-
-      max-width: 250px;
-
-      /* Limit button width */
-
-    }
-
-
-
-    #downloadBtn:hover,
-
-    #pocketCodeBtn:hover {
-
-      background-color: limegreen;
-
-      /* Background color on hover */
-
-      color: black;
-
-      /* Text color on hover */
-
-    }
-
-
-
-    /* Description text */
-
-    .description {
-
-      text-align: left;
-
-      /* Align description text to the left */
-
-    }
-
-
-
-    .custom-alert {
-
-      position: fixed;
-
-      top: 50%;
-
-      left: 50%;
-
-      transform: translate(-50%, -50%);
-
-      background-color: black;
-
-      border: 3px groove lime;
-
-      box-shadow: 0 0 10px lime;
-
-      padding: 20px;
-
-      z-index: 9999;
-
-      display: none;
-
-      width: 80%;
-
-      /* Adjust the width as needed */
-
-      max-width: 500px;
-
-      /* Set a maximum width to prevent it from becoming too wide */
-
-    }
-
-
-
-    .alert-title {
-
-      font-size: 18px;
-
-      margin-bottom: 10px;
-
-    }
-
-
-
-    .alert-message {
-
-      margin-bottom: 20px;
-
-    }
-
-
-
-    .close-btn {
-
-      background-color: black;
-
-      color: lime;
-
-      border: groove 3px lime;
-
-      border-radius: 50px;
-
-      padding: 8px 20px;
-
-      cursor: pointer;
-
-      border-radius: 3px;
-
-      display: block;
-
-      margin: 0 auto;
-
-      /* Center the button */
-
-    }
-
-
-
-    .border {
-
-      background-color: black;
-
-    }
-
-
-
-    .centervid {
-
-      display: flex;
-
-      justify-content: center;
-
-      /* Center horizontally */
-
-      align-items: center;
-
-      /* Center vertically */
-
-      padding: 7px;
-
-      margin-top: 10px;
-
-      background-color: black;
-
-      border-radius: 10px;
-
-      box-shadow: 0 0 10px gold;
-
-      border: groove gold 3px;
-
-    }
-
-
-
-    .center-container {
-
-      display: flex;
-
-      justify-content: center;
-
-      /* Center horizontally */
-
-      align-items: center;
-
-      /* Center vertically */
-
-    }
-
-
-
-    .image-container {
-
-      padding: 20px;
-
-      padding-top: 100px;
-
-      max-width: 100%;
-
-      max-height: 100%;
-
-      margin-bottom: -60px;
-
-    }
-
-
-
-    img {
-
-      max-width: 100%;
-
-      height: auto;
-
-    }
-
-  </style>
-
-  <style>
-
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-
-
-
-    * {
-
-      margin: 0;
-
-      padding: 0;
-
-      box-sizing: border-box;
-
-      font-family: sans-serif;
-
-    }
-
-
-
-    :root {
-
-      --skyblue: #0fd9e0;
-
-      --green: #18e61f;
-
-      --lightblack: #515C6F;
-
-      --white: #ffffff;
-
-      --grayscale: #cecaca;
-
-      --gold: #fff3d6;
-
-    }
-
-
-
-    .wrapper {
-
-      width: 380px;
-
-      padding: 25px 30px;
-
-      overflow: hidden;
-
-      position: relative;
-
-      border-radius: 15px;
-
-      background: black;
-
-
-
-    }
-
-
-
-    .wrapper i {
-
-      cursor: pointer;
-
-    }
-
-
-
-    .top-bar,
-
-    .progress-area .song-timer,
-
-    .controls,
-
-    .music-list .header,
-
-    .music-list ul li {
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-between;
-
-    }
-
-
-
-    .top-bar i {
-
-      font-size: 30px;
-
-      color: lime;
-
-    }
-
-
-
-    .top-bar i:first-child {
-
-      margin-left: -7px;
-
-    }
-
-
-
-    .top-bar span {
-
-      font-size: 18px;
-
-      margin-left: -3px;
-
-      color: gold;
-
-    }
-
-
-
-    .img-area {
-
-      width: 100%;
-
-      height: 256px;
-
-      overflow: hidden;
-
-      margin-top: 25px;
-
-      box-shadow: 0 0 10px gold;
-
-      border: groove black 3px;
-
-      border-radius: 15px;
-
-
-
-    }
-
-
-
-    .img-area img {
-
-      width: 100%;
-
-      height: 100%;
-
-      object-fit: fill;
-
-    }
-
-
-
-    .song-details {
-
-      text-align: center;
-
-      margin: 30px 0;
-
-    }
-
-
-
-    .song-details p {
-
-      color: lightgoldenrodyellow;
-
-    }
-
-
-
-    .song-details .name {
-
-      font-size: 21px;
-
-    }
-
-
-
-    .song-details .artist {
-
-      font-size: 18px;
-
-      opacity: 0.9;
-
-      line-height: 35px;
-
-    }
-
-
-
-    .progress-area {
-
-      height: 6px;
-
-      width: 100%;
-
-      border-radius: 50px;
-
-      background: goldenrod;
-
-      cursor: pointer;
-
-    }
-
-
-
-    .progress-area .progress-bar {
-
-      height: inherit;
-
-      width: 0%;
-
-      position: relative;
-
-      border-radius: inherit;
-
-      background: linear-gradient(90deg, var(--skyblue) 0%, var(--green) 100%);
-
-    }
-
-
-
-    .progress-bar::before {
-
-      content: "";
-
-      position: absolute;
-
-      height: 12px;
-
-      width: 12px;
-
-      border-radius: 50%;
-
-      top: 50%;
-
-      right: -5px;
-
-      z-index: 2;
-
-      opacity: 0;
-
-      pointer-events: none;
-
-      transform: translateY(-50%);
-
-      background: inherit;
-
-      transition: opacity 0.2s ease;
-
-    }
-
-
-
-    .progress-area:hover .progress-bar::before {
-
-      opacity: 1;
-
-      pointer-events: auto;
-
-    }
-
-
-
-    .progress-area .song-timer {
-
-      margin-top: 2px;
-
-    }
-
-
-
-    .song-timer span {
-
-      font-size: 13px;
-
-      color: lightgoldenrodyellow;
-
-    }
-
-
-
-    .controls {
-
-      margin: 40px 0 5px 0;
-
-    }
-
-
-
-    .controls i {
-
-      font-size: 28px;
-
-      user-select: none;
-
-      background: linear-gradient(var(--skyblue) 0%, var(--green) 100%);
-
-      background-clip: text;
-
-      -webkit-background-clip: text;
-
-      -webkit-text-fill-color: transparent;
-
-    }
-
-
-
-    .controls i:nth-child(2),
-
-    .controls i:nth-child(4) {
-
-      font-size: 43px;
-
-    }
-
-
-
-    .controls #prev {
-
-      margin-right: -13px;
-
-    }
-
-
-
-    .controls #next {
-
-      margin-left: -13px;
-
-    }
-
-
-
-    .controls .play-pause {
-
-      height: 54px;
-
-      width: 54px;
-
-      display: flex;
-
-      cursor: pointer;
-
-      align-items: center;
-
-      justify-content: center;
-
-      border-radius: 50%;
-
-      background: linear-gradient (var(--gold) 0%, var(--grayscale) 100%);
-
-      box-shadow: 0px 0px 5px var(--gold);
-
-    }
-
-
-
-    .play-pause::before {
-
-      position: absolute;
-
-      content: "";
-
-      height: 43px;
-
-      width: 43px;
-
-      border-radius: inherit;
-
-      background: linear-gradient(var(--skyblue) 0%, var(--green) 100%);
-
-    }
-
-
-
-    .play-pause i {
-
-      height: 43px;
-
-      width: 43px;
-
-      line-height: 43px;
-
-      text-align: center;
-
-      background: inherit;
-
-      background-clip: text;
-
-      -webkit-background-clip: text;
-
-      -webkit-text-fill-color: lightgoldenrodyellow;
-
-      position: absolute;
-
-    }
-
-
-
-    .music-list {
-
-      position: absolute;
-
-      background: black;
-
-      width: 100%;
-
-      left: 0;
-
-      bottom: -55%;
-
-      opacity: 0;
-
-      pointer-events: none;
-
-      z-index: 5;
-
-      padding: 15px 30px;
-
-      border: groove black 3px;
-
-      border-radius: 15px;
-
-      box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1);
-
-      transition: all 0.15s ease-out;
-
-    }
-
-
-
-    .music-list.show {
-
-      bottom: 0;
-
-      opacity: 1;
-
-      pointer-events: auto;
-
-    }
-
-
-
-    .header .row {
-
-      display: flex;
-
-      align-items: center;
-
-      font-size: 19px;
-
-      color: gold;
-
-    }
-
-
-
-    .header .row i {
-
-      cursor: default;
-
-    }
-
-
-
-    .header .row span {
-
-      margin-left: 5px;
-
-    }
-
-
-
-    .header #close {
-
-      font-size: 22px;
-
-      color: gold;
-
-    }
-
-
-
-    .music-list ul {
-
-      margin: 10px 0;
-
-      max-height: 260px;
-
-      overflow: auto;
-
-      padding: 10px;
-
-      box-shadow: 0 0 10px gold;
-
-      border-radius: 15px;
-
-    }
-
-
-
-    .music-list ul::-webkit-scrollbar {
-
-      width: 0px;
-
-    }
-
-
-
-    .music-list ul li {
-
-      list-style: none;
-
-      display: flex;
-
-      cursor: pointer;
-
-      padding-bottom: 10px;
-
-      margin-bottom: 5px;
-
-      color: gold;
-
-      border-bottom: 1px solid gold;
-
-    }
-
-
-
-    .music-list ul li:last-child {
-
-      border-bottom: 0px;
-
-    }
-
-
-
-    .music-list ul li .row span {
-
-      font-size: 17px;
-
-    }
-
-
-
-    .music-list ul li .row p {
-
-      opacity: 0.9;
-
-    }
-
-
-
-    ul li .audio-duration {
-
-      font-size: 16px;
-
-    }
-
-
-
-    ul li.playing {
-
-      pointer-events: none;
-
-      color: var(--green);
-
-    }
-
-
-
-    /* Custom CSS for button positioning */
-
-    .floating-button {
-
-      position: fixed;
-
-      color: greenyellow;
-
-      top: 15px;
-
-      left: 50%;
-
-      transform: translateX(-50%);
-
-      z-index: 1000;
-
-      background-color: black;
-
-    }
-
-
-
-    .music-list-container {
-
-      display: none;
-
-      /* Your styles for the music list container */
-
-      border: groove gold 3px;
-
-      border-radius: 15px;
-
-      box-shadow: 0 0 10px gold;
-
-    }
-
-
-
-    /* Styles for floating button */
-
-    .floating-button {
-
-      border-radius: 50%;
-
-      padding: 3px;
-
-      box-shadow: 0 0 10px gold;
-
-    }
-
-
-
-    /* Styles for music list container */
-
-    .music-list-container {
-
-      position: fixed;
-
-      top: 50%;
-
-      left: 50%;
-
-      transform: translate(-50%, -50%);
-
-      background-color: black;
-
-      border: 3px groove gold;
-
-      border-radius: 15px;
-
-      padding: 5px;
-
-      margin-top: 40px;
-
-      box-shadow: 0 0 10px gold;
-
-      z-index: 999;
-
-      overflow: auto;
-
-      /* Add this line */
-
-    }
-
-
-
-    @media only screen and (orientation: landscape) {
-
-      .music-list-container {
-
-        top: 65%;
-
-        left: 50%;
-
-        transform: translate(-50%, -50%);
-
-        max-height: 80%;
-
-        max-width: 80%;
-
-      }
-
-    }
-
-
-
-    .music-list-container input[type="checkbox"] {
-
-      display: none;
-
-    }
-
-
-
-    .music-list-container input[type="checkbox"]:checked+#content {
-
-      display: block;
-
-    }
-
-
-
-    .music-list-container input[type="checkbox"]:checked+.floating-button {
-
-      display: none;
-
-    }
-
-
-
-    .wrapper {
-
-      width: 380px;
-
-      padding: 5px 5px;
-
-      overflow: hidden;
-
-      position: relative;
-
-      border-radius: 15px;
-
-      background: black;
-
-    }
-
-
-
-    .subtxt {
-
-      border: groove black 3px;
-
-      padding: 20px;
-
-      background-color: black;
-
-      border-radius: 10px;
-
-      box-shadow: 0 0 10px gold;
-
-      margin-top: 20px;
-
-      margin-bottom: 20px;
-
-    }
-
-
-
-    #queueIcon {
-
-
-
-      box-shadow: gold 0px 30px 60px -12px inset, gold 0px 18px 36px -18px inset;
-
-      border: groove gold 3px;
-
-      border-radius: 50%;
-
-      padding: 15px;
-
-      /* Style for the default music queue icon */
-
-    }
-
-
-
-    #toggleButton:checked+.floating-button #queueIcon {
-
-      box-shadow: red 0px 30px 60px -12px inset, red 0px 18px 36px -18px inset;
-
-      border: 3px groove gold;
-
-      border-radius: 50%;
-
-      padding: 15px;
-
-      /* Style for the music queue icon when the checkbox is checked */
-
-    }
-
-
-
-    .info-button {
-
-      width: 50px;
-
-      height: 50px;
-
-      background-color: gold;
-
-      border: groove black 3px;
-
-      box-shadow: 0 0 10px gold;
-
-      border-radius: 50%;
-
-      display: flex;
-
-      justify-content: center;
-
-      align-items: center;
-
-      color: black;
-
-      font-size: 24px;
-
-      cursor: pointer;
-
-    }
-
-
-
-    .info-button:hover {
-
-      background-color: darkgoldenrod;
-
-    }
-
-
-
-    /* Modal styles */
-
-    .modal {
-
-      display: none;
-
-      position: fixed;
-
-      z-index: 9999;
-
-      left: 0%;
-
-      top: 0%;
-
-      width: 100%;
-
-      height: 100%;
-
-      background-color: black;
-
-      overflow: auto;
-
-    }
-
-
-
-    .modal-content {
-
-      background-color: var(--lightblack);
-
-      margin: 15% auto;
-
-      padding: 20px;
-
-      border: 3px solid black;
-
-      border-radius: 30px;
-
-      box-shadow: 0 0 10px gold;
-
-      width: 80%;
-
-    }
-
-
-
-    .close {
-
-      color: darkred;
-
-      float: right;
-
-      font-size: 38px;
-
-      font-weight: bold;
-
-    }
-
-
-
-    .close:hover,
-
-    .close:focus {
-
-      color: black;
-
-      text-decoration: none;
-
-      cursor: pointer;
-
-    }
-
-
-
-    .modal1 {
-
-      display: none;
-
-      position: fixed;
-
-      z-index: 9999;
-
-      left: 0;
-
-      top: 0;
-
-      width: 100%;
-
-      height: 100%;
-
-      overflow: auto;
-
-      background-color: black;
-
-    }
-
-
-
-    .modal-content1 {
-
-      background-color: black;
-
-      margin: 15% auto;
-
-      padding: 20px;
-
-      border: 3px groove black;
-
-      width: 100%;
-
-    }
-
-
-
-    .close1 {
-
-      color: #aaa;
-
-      float: right;
-
-      font-size: 28px;
-
-      font-weight: bold;
-
-    }
-
-
-
-    .close1:hover,
-
-    .close1:focus {
-
-      color: black;
-
-      text-decoration: none;
-
-      cursor: pointer;
-
-    }
-
-
-
-    .conza {
-
-      position: relative;
-
-      width: 100%;
-
-      display: flex;
-
-      justify-content: center;
-
-      /* Center horizontally */
-
-      align-items: center;
-
-      /* Center vertically */
-
-      text-align: center;
-
-    }
-
-
-
-    input[type="text"] {
-
-      /* Additional styles for input element */
-
-      width: 100%;
-
-      /* Adjust width as needed */
-
-      max-width: 300px;
-
-      /* Example max-width */
-
-    }
-
-
-
-    .notification {
-
-      position: fixed;
-
-      max-width: auto;
-
-      top: 50%;
-
-      left: 50%;
-
-      transform: translate(-50%, -50%);
-
-      padding: 10px 20px;
-
-      background-color: #4CAF50;
-
-      color: white;
-
-      border-radius: 5px;
-
-      display: none;
-
-      z-index: 9999;
-
-      /* Set a high z-index value to ensure it appears over everything */
-
-    }
-
-
-
-    .notification.show {
-
-      display: block;
-
-    }
-
-
-
-    /* Add other styles for the wrapper as needed */
-
-  </style>
-
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J7VPC5KVCJ"></script>
-
-  <script>
-
-    window.dataLayer = window.dataLayer || [];
-
-
-
-    function gtag() { dataLayer.push(arguments); }
-
-    gtag('js', new Date());
-
-    gtag('config', 'G-J7VPC5KVCJ');
-
-  </script>
-
-  <script>
-
-    document.getElementById('downloadBtn').addEventListener('click', function() {
-
-          gtag('event', 'download', {
-
-            'event_category': 'File Download',
-
-            'event_label': 'Flappy Bird.catrobat' // Replace with the name of your file
-
-          });
-
-  </script>
-
-  <link rel="icon" href="fbfavicon.png" type="image/x-icon">
-
-</head>
-
-
-
-<body>
-
-  <div class="center-container">
-
-    <div class="image-container">
-
-      <img src="https://cdn.freebiesupply.com/logos/large/2x/flappy-bird-logo-black-and-white.png" alt="Flappy Bird Logo">
-
-    </div>
-
-  </div>
-
-  <div class="container">
-
-    <a href="https://share.catrob.at/pocketcode/project/f61191ca-bfa4-4c8c-b6d4-310db4b2027b">
-
-      <img src="https://img.itch.zone/aW1nLzcyMDIyMjAucG5n/original/Gwnwcs.png" alt="Flappy Bird Logo" class="logo"></a>
-
-    <button id="downloadBtn">Download Flappy Bird</button>
-
-    <strong>
-
-      <p style="color: gold; margin-top: 20px;">Download Size (19.50 MB)</p>
-
-    </strong>
-
-    <p style="color: gold; margin-top: 20px; padding-bottom: 37px;">To play this game, you need to have the app Pocket Code installed on your (Android) device.</p>
-
-    <a href="https://catrobat.org">
-
-      <img src="https://raw.githubusercontent.com/G-Jordan/FlappyBird/main/pclogo.png" alt="Pocketcode Logo" class="logo"></a>
-
-    <a href="https://play.google.com/store/apps/details?id=org.catrobat.catroid" target="_blank" id="pocketCodeBtn">Get Pocket Code</a>
-
-  </div>
-
-  <div class="centervid">
-
-    <h3 style="color: gold;">How To Install Video</h3>
-
-  </div>
-
-  <div class="centervid">
-
-    <iframe width="auto" height="auto" src="https://www.youtube.com/embed/Jka7_Zch85Y" title="FlappyBird Install Instructions" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-  </div>
-
-  <div class="description" style="background: linear-gradient(to bottom, green, black); padding: 20px 20px 40px; border: 3px groove lime; border-radius: 15px; box-shadow: 0 0 20px lime; margin-top: 20px;">
-
-    <h2 style="background-color: black; border: groove gold 3px; padding: 10px; box-shadow: 0 0 10px gold; color: gold; border-radius: 10px; display: inline-block; margin-bottom: 20px; margin-top: 30px;">Welcome to the Flappy Bird Extravaganza: Where Learning is a Flap Away!</h2>
-
-    <h3 style="border: 2px groove lime; padding: 10px; box-shadow: 0 0 10px lime; border-radius: 10px; background-color: black; color: lightblue; display: inline-block;">Why Flappy Bird is Educational</h3>
-
-    <ul class="subtxt">
-
-      <li>Flappy Bird isn't just your average bird-brained game; it's a flight of fancy into the world of coding!</li>
-
-      <li>With Pocket Code at its wingtips, Flappy Bird turns coding into a hilarious adventure where even birds can learn to program!</li>
-
-      <li>Ever dreamed of mastering multiple languages? Well, Flappy Bird's got you covered with support for 13 tongues! You'll be chirping in Chinese and squawking in Spanish in no time!</li>
-
-      <li>Need to brush up on your communication skills? Share your scores with friends through a user-friendly web page and watch the flock gather!</li>
-
-    </ul>
-
-    <h3 style="border: 2px groove lime; padding: 10px; box-shadow: 0 0 10px lime; border-radius: 10px; background-color: black; color: lightblue; display: inline-block;">Features of Flappy Bird</h3>
-
-    <ul class="subtxt">
-
-      <li>Say goodbye to boring scoreboards! Flappy Bird's scoreboard is so fancy, it's practically wearing a top hat and monocle!</li>
-
-      <li>Customize your gaming experience with more colors than a peacock's feather collection! Go wild and make those pipes pop!</li>
-
-      <li>Explore background modes that will make your gaming experience more dynamic than a flock of flamingos on a rollercoaster!</li>
-
-      <li>With advanced sliders and tap-and-hold functionality, you'll feel like a coding maestro, conducting your birdie symphony!</li>
-
-    </ul>
-
-    <h3 style="border: 2px groove lime; padding: 10px; box-shadow: 0 0 10px lime; border-radius: 10px; background-color: black; color: lightblue; display: inline-block;">Why Pocket Code Rocks</h3>
-
-    <ul class="subtxt">
-
-      <li>Pocket Code is the ultimate wingman for unleashing your creative genius! With its drag-and-drop interface, even a pigeon can learn to code!</li>
-
-      <li>Who needs a nest when you have Pocket Code? It's your one-stop-shop for creating interactive stories, games, and animations that will make your friends flock to you!</li>
-
-      <li>Dive into the Catrobat community and join the coding party! It's like a bird feeder for your brain, filled with ideas and inspiration!</li>
-
-    </ul>
-
-    <p style="border: 2px groove gold; padding: 10px; box-shadow: 0 0 10px gold; border-radius: 10px; background-color: black; color: lime; display: inline-block;"><strong>Community Guidelines</strong></p>
-
-    <ul class="subtxt">
-
-      <li>This program is released under GPL v3.0, ensuring transparency and collaboration within the community.</li>
-
-      <li>You may not use this program for profit purposes ever. It's all about sharing the fun!</li>
-
-      <li>Feel free to remix, learn, and share from the code, but please credit the original creators and programmers when sharing within the Catrobat community.</li>
-
-      <li>So flap on over, grab your device, and let's soar into the sky of hilarity and learning with Flappy Bird and Pocket Code! It's a feather-ruffling good time waiting to happen!</li>
-
-    </ul>
-
-    <p style="border: 2px groove gold; padding: 10px; box-shadow: 0 0 10px gold; border-radius: 10px; background-color: black; color: lime; display: inline-block;"><strong>Notes and credits</strong></p>
-
-    <ul class="subtxt">
-
-      <li>Copyright .Gears ( 2013 )</li>
-
-      <li>Designer : Dong Nguyen</li>
-
-      <li>Sliders By : VelociFaptR</li>
-
-      <li>Hex2Rgb By : Guildmarco</li>
-
-      <li>Catroid : Wolfgang Slany</li>
-
-      <li>Code by Jordan Smith ( 2023 - 2024)</li>
-
-    </ul>
-
-  </div>
-
-  <!-- Footer with quick links -->
-
-  <footer>
-
-    Developed by "G Jordan" (2023-2024)
-
-    <div class="quick-links">
-
-      <a href="https://www.facebook.com/share/a8bWwRpM5tp2aXnv/?mibextid=qi2Omg" target="_blank">
-
-        <img src="https://img.icons8.com/fluent/48/000000/facebook-new.png" alt="Facebook Icon">
-
-      </a>
-
-      <a href="https://www.instagram.com/g.jordan73?igsh=amprcjA2bTZ3OXFu" target="_blank">
-
-        <img src="https://img.icons8.com/fluent/48/000000/instagram-new.png" alt="Instagram Icon">
-
-      </a>
-
-      <a href="https://www.linkedin.com/in/gjordan73?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">
-
-        <img src="https://img.icons8.com/fluent/48/000000/linkedin.png" alt="LinkedIn Icon">
-
-      </a>
-
-      <a href="https://youtube.com/@gjordan6692?si=82CTz-CV0Cg5VoJR" target="_blank">
-
-        <img src="https://img.icons8.com/fluent/48/000000/youtube-play.png" alt="YouTube Icon">
-
-      </a>
-
-    </div>
-
-  </footer>
-
-  <div id="custom-alert" class="custom-alert">
-
-    <h2 class="alert-title">Install Instructions</h2>
-
-    <p id="alert-message" class="alert-message"></p>
-
-    <button id="close-btn" class="close-btn" onclick="closeAlert()">OK</button>
-
-  </div>
-
-  <script>
-
-    // JavaScript code goes here
-
-    document.addEventListener('DOMContentLoaded', function() {
-
-      var downloadBtn = document.getElementById('downloadBtn');
-
-      downloadBtn.addEventListener('click', function() {
-
-        window.open("https://3ly.link/1xObX", "_blank");
-
-
-
-        // Replace this with your download logic
-
-        showAlert("To get started, ensure Pocketcode is installed on your device. Once installed, launch the Pocketcode app and navigate to the 'My Programs' section. From there, tap the three dots and select 'Import Project.' Locate the FlappyBird.catrobat file in your Downloads folder and import it. Once imported, you're ready to start playing FlappyBird. Enjoy the game!")
-
-      });
-
-    });
-
-
-
-    function showAlert(message) {
-
-      var alertBox = document.getElementById("custom-alert");
-
-      var messageElement = document.getElementById("alert-message");
-
-      messageElement.textContent = message;
-
-      alertBox.style.display = "block";
-
-    }
-
-
-
-    function closeAlert() {
-
-      var alertBox = document.getElementById("custom-alert");
-
-      alertBox.style.display = "none";
-
-    }
-
-  </script>
-
-  <input type="checkbox" id="toggleButton" class="floating-button">
-
-  <label for="toggleButton" class="floating-button"><i id="queueIcon" class="material-icons">queue_music</i></label>
-
-
-
-  <div id="content" class="music-list-container" style="display: none;">
-
-    <div class="wrapper">
-
-      <div class="top-bar">
-
-        <i class="material-icons"></i>
-
-        <span style="color: lightgoldenrodyellow; font-size: 20px; border: 2px groove black; padding: 10px; box-shadow: 0 0 10px gold; border-radius: 30px; margin-top: 10px; display: inline-flex; align-items: center;"><strong>Music Player</strong>
-
-          <div class="info-button" onclick="showModal()" style="width: 30px; height: 30px; background-color: darkgoldenrod; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: black; font-size: 20px; cursor: pointer; margin-left: 10px; padding: 15px;"><span>i</span></div>
-
-        </span>
-
-        <div id="floatingButtons" style="position: fixed; top: 20px; width: 100%; display: flex; justify-content: space-between; padding: 0 20px; z-index: 9999;">
-
-          <button id="favoriteButton" onclick="markFavorite()" style="background-color: transparent; border: none;">
-
-            <i class="material-icons" style="font-size: 24px; color: lime;">favorite</i>
-
-          </button>
-
-          <button id="favoriteSongsButton" onclick="showFavoriteSongs()" style="background-color: transparent; border: none;">
-
-            <i class="material-icons" style="font-size: 24px; color: lime; margin-right: 15px;">library_music</i> <!-- Changed icon to library_music -->
-
-          </button>
-
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>FlappyBird</title>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        />
+        <style>
+            body {
+                background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTi9h0cSu4j_oqzB28iIwKdNR0JHpq-zWIRQw&usqp=CAU");
+                margin: 0;
+                padding: 0;
+                color: gold;
+                /* Text color */
+            }
+
+            .container {
+                border: 3px groove gold;
+                /* Border style */
+                border-radius: 10px;
+                /* Border radius */
+                box-shadow: 0 0 30px gold;
+                /* Box shadow */
+                padding: 20px;
+                margin: 80px auto;
+                margin-bottom: 20px;
+                max-width: 600px;
+                /* Limit container width for better centering */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-wrap: wrap;
+                background-color: black;
+                /* Background color */
+                text-align: center;
+                /* Center text */
+            }
+
+            .logo {
+                width: 120px;
+                height: auto;
+                cursor: pointer;
+                border: gold groove 3px;
+                border-radius: 17px;
+                padding: 10px;
+                box-shadow:
+                    inset 0 0 60px -12px gold,
+                    inset 0 0 36px -18px gold;
+                /* Box shadow */
+                margin-right: 10px;
+            }
+
+            .title {
+                font-weight: bold;
+                text-align: center;
+                background-color: rgba(128, 128, 128, 0.5);
+                /* Background color with opacity */
+                padding: 15px;
+                border-radius: 10px;
+                position: relative;
+                width: 100%;
+                margin-bottom: 10px;
+                font-size: 24px;
+            }
+
+            .medals {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                padding: 15px;
+                margin: 23px;
+                position: relative;
+            }
+
+            .medal-info {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                margin-top: 10px;
+            }
+
+            .medal {
+                text-align: center;
+                margin: 10px;
+            }
+
+            .medal img {
+                width: 50px;
+                height: auto;
+            }
+
+            .medal p {
+                margin-top: 5px;
+                margin-bottom: 0;
+            }
+
+            footer {
+                text-align: center;
+                margin-top: 50px;
+                color: gold;
+                /* Text color */
+            }
+
+            .quick-links {
+                display: flex;
+                justify-content: space-around;
+                margin-top: 20px;
+            }
+
+            .quick-links a {
+                display: inline-block;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 50px;
+                text-decoration: none;
+            }
+
+            #downloadBtn,
+            #pocketCodeBtn {
+                border: 3px groove green;
+                /* Border style */
+                border-radius: 10px;
+                /* Border radius */
+                box-shadow: 0 0 10px limegreen;
+                /* Box shadow */
+                padding: 15px;
+                margin-top: 20px;
+                margin-bottom: 20px;
+                /* Adjusted margin */
+                background-color: black;
+                /* Background color */
+                color: limegreen;
+                /* Text color */
+                font-weight: bold;
+                cursor: pointer;
+                display: block;
+                /* Make the button a block element */
+                margin-left: auto;
+                /* Center the button */
+                margin-right: auto;
+                /* Center the button */
+                max-width: 250px;
+                /* Limit button width */
+            }
+
+            #downloadBtn:hover,
+            #pocketCodeBtn:hover {
+                background-color: limegreen;
+                /* Background color on hover */
+                color: black;
+                /* Text color on hover */
+            }
+
+            /* Description text */
+            .description {
+                text-align: left;
+                /* Align description text to the left */
+            }
+
+            .custom-alert {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: black;
+                border: 3px groove lime;
+                box-shadow: 0 0 10px lime;
+                padding: 20px;
+                z-index: 9999;
+                display: none;
+                width: 80%;
+                /* Adjust the width as needed */
+                max-width: 500px;
+                /* Set a maximum width to prevent it from becoming too wide */
+            }
+
+            .alert-title {
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+
+            .alert-message {
+                margin-bottom: 20px;
+            }
+
+            .close-btn {
+                background-color: black;
+                color: lime;
+                border: groove 3px lime;
+                border-radius: 50px;
+                padding: 8px 20px;
+                cursor: pointer;
+                border-radius: 3px;
+                display: block;
+                margin: 0 auto;
+                /* Center the button */
+            }
+
+            .border {
+                background-color: black;
+            }
+
+            .centervid {
+                display: flex;
+                justify-content: center;
+                /* Center horizontally */
+                align-items: center;
+                /* Center vertically */
+                padding: 7px;
+                margin-top: 10px;
+                background-color: black;
+                border-radius: 10px;
+                box-shadow: 0 0 10px gold;
+                border: groove gold 3px;
+            }
+
+            .center-container {
+                display: flex;
+                justify-content: center;
+                /* Center horizontally */
+                align-items: center;
+                /* Center vertically */
+            }
+
+            .image-container {
+                padding: 20px;
+                padding-top: 100px;
+                max-width: 100%;
+                max-height: 100%;
+                margin-bottom: -60px;
+            }
+
+            img {
+                max-width: 100%;
+                height: auto;
+            }
+        </style>
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: sans-serif;
+            }
+
+            :root {
+                --skyblue: #0fd9e0;
+                --green: #18e61f;
+                --lightblack: #515c6f;
+                --white: #ffffff;
+                --grayscale: #cecaca;
+                --gold: #fff3d6;
+            }
+
+            .wrapper {
+                width: 380px;
+                padding: 25px 30px;
+                overflow: hidden;
+                position: relative;
+                border-radius: 15px;
+                background: black;
+            }
+
+            .wrapper i {
+                cursor: pointer;
+            }
+
+            .top-bar,
+            .progress-area .song-timer,
+            .controls,
+            .music-list .header,
+            .music-list ul li {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .top-bar i {
+                font-size: 30px;
+                color: lime;
+            }
+
+            .top-bar i:first-child {
+                margin-left: -7px;
+            }
+
+            .top-bar span {
+                font-size: 18px;
+                margin-left: -3px;
+                color: gold;
+            }
+
+            .img-area {
+                width: 100%;
+                height: 256px;
+                overflow: hidden;
+                margin-top: 25px;
+                box-shadow: 0 0 10px gold;
+                border: groove black 3px;
+                border-radius: 15px;
+            }
+
+            .img-area img {
+                width: 100%;
+                height: 100%;
+                object-fit: fill;
+            }
+
+            .song-details {
+                text-align: center;
+                margin: 30px 0;
+            }
+
+            .song-details p {
+                color: lightgoldenrodyellow;
+            }
+
+            .song-details .name {
+                font-size: 21px;
+            }
+
+            .song-details .artist {
+                font-size: 18px;
+                opacity: 0.9;
+                line-height: 35px;
+            }
+
+            .progress-area {
+                height: 6px;
+                width: 100%;
+                border-radius: 50px;
+                background: goldenrod;
+                cursor: pointer;
+            }
+
+            .progress-area .progress-bar {
+                height: inherit;
+                width: 0%;
+                position: relative;
+                border-radius: inherit;
+                background: linear-gradient(
+                    90deg,
+                    var(--skyblue) 0%,
+                    var(--green) 100%
+                );
+            }
+
+            .progress-bar::before {
+                content: "";
+                position: absolute;
+                height: 12px;
+                width: 12px;
+                border-radius: 50%;
+                top: 50%;
+                right: -5px;
+                z-index: 2;
+                opacity: 0;
+                pointer-events: none;
+                transform: translateY(-50%);
+                background: inherit;
+                transition: opacity 0.2s ease;
+            }
+
+            .progress-area:hover .progress-bar::before {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .progress-area .song-timer {
+                margin-top: 2px;
+            }
+
+            .song-timer span {
+                font-size: 13px;
+                color: lightgoldenrodyellow;
+            }
+
+            .controls {
+                margin: 40px 0 5px 0;
+            }
+
+            .controls i {
+                font-size: 28px;
+                user-select: none;
+                background: linear-gradient(
+                    var(--skyblue) 0%,
+                    var(--green) 100%
+                );
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            .controls i:nth-child(2),
+            .controls i:nth-child(4) {
+                font-size: 43px;
+            }
+
+            .controls #prev {
+                margin-right: -13px;
+            }
+
+            .controls #next {
+                margin-left: -13px;
+            }
+
+            .controls .play-pause {
+                height: 54px;
+                width: 54px;
+                display: flex;
+                cursor: pointer;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                background: linear-gradient
+                    (var(--gold) 0%, var(--grayscale) 100%);
+                box-shadow: 0px 0px 5px var(--gold);
+            }
+
+            .play-pause::before {
+                position: absolute;
+                content: "";
+                height: 43px;
+                width: 43px;
+                border-radius: inherit;
+                background: linear-gradient(
+                    var(--skyblue) 0%,
+                    var(--green) 100%
+                );
+            }
+
+            .play-pause i {
+                height: 43px;
+                width: 43px;
+                line-height: 43px;
+                text-align: center;
+                background: inherit;
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: lightgoldenrodyellow;
+                position: absolute;
+            }
+
+            .music-list {
+                position: absolute;
+                background: black;
+                width: 100%;
+                left: 0;
+                bottom: -55%;
+                opacity: 0;
+                pointer-events: none;
+                z-index: 5;
+                padding: 15px 30px;
+                border: groove black 3px;
+                border-radius: 15px;
+                box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1);
+                transition: all 0.15s ease-out;
+            }
+
+            .music-list.show {
+                bottom: 0;
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .header .row {
+                display: flex;
+                align-items: center;
+                font-size: 19px;
+                color: gold;
+            }
+
+            .header .row i {
+                cursor: default;
+            }
+
+            .header .row span {
+                margin-left: 5px;
+            }
+
+            .header #close {
+                font-size: 22px;
+                color: gold;
+            }
+
+            .music-list ul {
+                margin: 10px 0;
+                max-height: 260px;
+                overflow: auto;
+                padding: 10px;
+                box-shadow: 0 0 10px gold;
+                border-radius: 15px;
+            }
+
+            .music-list ul::-webkit-scrollbar {
+                width: 0px;
+            }
+
+            .music-list ul li {
+                list-style: none;
+                display: flex;
+                cursor: pointer;
+                padding-bottom: 10px;
+                margin-bottom: 5px;
+                color: gold;
+                border-bottom: 1px solid gold;
+            }
+
+            .music-list ul li:last-child {
+                border-bottom: 0px;
+            }
+
+            .music-list ul li .row span {
+                font-size: 17px;
+            }
+
+            .music-list ul li .row p {
+                opacity: 0.9;
+            }
+
+            ul li .audio-duration {
+                font-size: 16px;
+            }
+
+            ul li.playing {
+                pointer-events: none;
+                color: var(--green);
+            }
+
+            /* Custom CSS for button positioning */
+            .floating-button {
+                position: fixed;
+                color: greenyellow;
+                top: 15px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 1000;
+                background-color: black;
+            }
+
+            .music-list-container {
+                display: none;
+                /* Your styles for the music list container */
+                border: groove gold 3px;
+                border-radius: 15px;
+                box-shadow: 0 0 10px gold;
+            }
+
+            /* Styles for floating button */
+            .floating-button {
+                border-radius: 50%;
+                padding: 3px;
+                box-shadow: 0 0 10px gold;
+            }
+
+            /* Styles for music list container */
+            .music-list-container {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: black;
+                border: 3px groove gold;
+                border-radius: 15px;
+                padding: 5px;
+                margin-top: 40px;
+                box-shadow: 0 0 10px gold;
+                z-index: 999;
+                overflow: auto;
+                /* Add this line */
+            }
+
+            @media only screen and (orientation: landscape) {
+                .music-list-container {
+                    top: 65%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    max-height: 80%;
+                    max-width: 80%;
+                }
+            }
+
+            .music-list-container input[type="checkbox"] {
+                display: none;
+            }
+
+            .music-list-container input[type="checkbox"]:checked + #content {
+                display: block;
+            }
+
+            .music-list-container
+                input[type="checkbox"]:checked
+                + .floating-button {
+                display: none;
+            }
+
+            .wrapper {
+                width: 380px;
+                padding: 5px 5px;
+                overflow: hidden;
+                position: relative;
+                border-radius: 15px;
+                background: black;
+            }
+
+            .subtxt {
+                border: groove black 3px;
+                padding: 20px;
+                background-color: black;
+                border-radius: 10px;
+                box-shadow: 0 0 10px gold;
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+
+            #queueIcon {
+                box-shadow:
+                    gold 0px 30px 60px -12px inset,
+                    gold 0px 18px 36px -18px inset;
+                border: groove gold 3px;
+                border-radius: 50%;
+                padding: 15px;
+                /* Style for the default music queue icon */
+            }
+
+            #toggleButton:checked + .floating-button #queueIcon {
+                box-shadow:
+                    red 0px 30px 60px -12px inset,
+                    red 0px 18px 36px -18px inset;
+                border: 3px groove gold;
+                border-radius: 50%;
+                padding: 15px;
+                /* Style for the music queue icon when the checkbox is checked */
+            }
+
+            .info-button {
+                width: 50px;
+                height: 50px;
+                background-color: gold;
+                border: groove black 3px;
+                box-shadow: 0 0 10px gold;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: black;
+                font-size: 24px;
+                cursor: pointer;
+            }
+
+            .info-button:hover {
+                background-color: darkgoldenrod;
+            }
+
+            /* Modal styles */
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 9999;
+                left: 0%;
+                top: 0%;
+                width: 100%;
+                height: 100%;
+                background-color: black;
+                overflow: auto;
+            }
+
+            .modal-content {
+                background-color: var(--lightblack);
+                margin: 15% auto;
+                padding: 20px;
+                border: 3px solid black;
+                border-radius: 30px;
+                box-shadow: 0 0 10px gold;
+                width: 80%;
+            }
+
+            .close {
+                color: darkred;
+                float: right;
+                font-size: 38px;
+                font-weight: bold;
+            }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .modal1 {
+                display: none;
+                position: absolute;
+                z-index: 9999;
+                left: 0;
+                top: -10%;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: black;
+                background-color: rgba(0, 0, 0, 0.5);
+            }
+
+            .modal-content1 {
+                background-color: black;
+                margin: 25% auto;
+                padding: 20px;
+                border: 3px groove black;
+                width: 100%;
+            }
+
+            .close1 {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+
+            .close1:hover,
+            .close1:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .conza {
+                position: relative;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                /* Center horizontally */
+                align-items: center;
+                /* Center vertically */
+                text-align: center;
+            }
+
+            input[type="text"] {
+                /* Additional styles for input element */
+                width: 100%;
+                /* Adjust width as needed */
+                max-width: 300px;
+                /* Example max-width */
+            }
+
+            .notification {
+                position: fixed;
+                max-width: auto;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                padding: 10px 20px;
+                background-color: #4caf50;
+                color: white;
+                border-radius: 5px;
+                display: none;
+                z-index: 9999;
+                /* Set a high z-index value to ensure it appears over everything */
+            }
+
+            .notification.show {
+                display: block;
+            }
+
+            /* Add other styles for the wrapper as needed */
+        </style>
+        <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-J7VPC5KVCJ"
+        ></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+            gtag("config", "G-J7VPC5KVCJ");
+        </script>
+        <script>
+            document.getElementById('downloadBtn').addEventListener('click', function() {
+                  gtag('event', 'download', {
+                    'event_category': 'File Download',
+                    'event_label': 'Flappy Bird.catrobat' // Replace with the name of your file
+                  });
+        </script>
+        <link rel="icon" href="fbfavicon.png" type="image/x-icon" />
+    </head>
+
+    <body>
+        <div class="center-container">
+            <div class="image-container">
+                <img
+                    src="https://cdn.freebiesupply.com/logos/large/2x/flappy-bird-logo-black-and-white.png"
+                    alt="Flappy Bird Logo"
+                />
+            </div>
+        </div>
+        <div class="container">
+            <a
+                href="https://share.catrob.at/pocketcode/project/f61191ca-bfa4-4c8c-b6d4-310db4b2027b"
+            >
+                <img
+                    src="https://img.itch.zone/aW1nLzcyMDIyMjAucG5n/original/Gwnwcs.png"
+                    alt="Flappy Bird Logo"
+                    class="logo"
+            /></a>
+            <button id="downloadBtn">Download Flappy Bird</button>
+            <strong>
+                <p style="color: gold; margin-top: 20px">
+                    Download Size (19.50 MB)
+                </p>
+            </strong>
+            <p style="color: gold; margin-top: 20px; padding-bottom: 37px">
+                To play this game, you need to have the app Pocket Code
+                installed on your (Android) device.
+            </p>
+            <a href="https://catrobat.org">
+                <img
+                    src="https://raw.githubusercontent.com/G-Jordan/FlappyBird/main/pclogo.png"
+                    alt="Pocketcode Logo"
+                    class="logo"
+            /></a>
+            <a
+                href="https://play.google.com/store/apps/details?id=org.catrobat.catroid"
+                target="_blank"
+                id="pocketCodeBtn"
+                >Get Pocket Code</a
+            >
+        </div>
+        <div class="centervid">
+            <h3 style="color: gold">How To Install Video</h3>
+        </div>
+        <div class="centervid">
+            <iframe
+                width="auto"
+                height="auto"
+                src="https://www.youtube.com/embed/Jka7_Zch85Y"
+                title="FlappyBird Install Instructions"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+            ></iframe>
+        </div>
+        <div
+            class="description"
+            style="
+                background: linear-gradient(to bottom, green, black);
+                padding: 20px 20px 40px;
+                border: 3px groove lime;
+                border-radius: 15px;
+                box-shadow: 0 0 20px lime;
+                margin-top: 20px;
+            "
+        >
+            <h2
+                style="
+                    background-color: black;
+                    border: groove gold 3px;
+                    padding: 10px;
+                    box-shadow: 0 0 10px gold;
+                    color: gold;
+                    border-radius: 10px;
+                    display: inline-block;
+                    margin-bottom: 20px;
+                    margin-top: 30px;
+                "
+            >
+                Welcome to the Flappy Bird Extravaganza: Where Learning is a
+                Flap Away!
+            </h2>
+            <h3
+                style="
+                    border: 2px groove lime;
+                    padding: 10px;
+                    box-shadow: 0 0 10px lime;
+                    border-radius: 10px;
+                    background-color: black;
+                    color: lightblue;
+                    display: inline-block;
+                "
+            >
+                Why Flappy Bird is Educational
+            </h3>
+            <ul class="subtxt">
+                <li>
+                    Flappy Bird isn't just your average bird-brained game; it's
+                    a flight of fancy into the world of coding!
+                </li>
+                <li>
+                    With Pocket Code at its wingtips, Flappy Bird turns coding
+                    into a hilarious adventure where even birds can learn to
+                    program!
+                </li>
+                <li>
+                    Ever dreamed of mastering multiple languages? Well, Flappy
+                    Bird's got you covered with support for 13 tongues! You'll
+                    be chirping in Chinese and squawking in Spanish in no time!
+                </li>
+                <li>
+                    Need to brush up on your communication skills? Share your
+                    scores with friends through a user-friendly web page and
+                    watch the flock gather!
+                </li>
+            </ul>
+            <h3
+                style="
+                    border: 2px groove lime;
+                    padding: 10px;
+                    box-shadow: 0 0 10px lime;
+                    border-radius: 10px;
+                    background-color: black;
+                    color: lightblue;
+                    display: inline-block;
+                "
+            >
+                Features of Flappy Bird
+            </h3>
+            <ul class="subtxt">
+                <li>
+                    Say goodbye to boring scoreboards! Flappy Bird's scoreboard
+                    is so fancy, it's practically wearing a top hat and monocle!
+                </li>
+                <li>
+                    Customize your gaming experience with more colors than a
+                    peacock's feather collection! Go wild and make those pipes
+                    pop!
+                </li>
+                <li>
+                    Explore background modes that will make your gaming
+                    experience more dynamic than a flock of flamingos on a
+                    rollercoaster!
+                </li>
+                <li>
+                    With advanced sliders and tap-and-hold functionality, you'll
+                    feel like a coding maestro, conducting your birdie symphony!
+                </li>
+            </ul>
+            <h3
+                style="
+                    border: 2px groove lime;
+                    padding: 10px;
+                    box-shadow: 0 0 10px lime;
+                    border-radius: 10px;
+                    background-color: black;
+                    color: lightblue;
+                    display: inline-block;
+                "
+            >
+                Why Pocket Code Rocks
+            </h3>
+            <ul class="subtxt">
+                <li>
+                    Pocket Code is the ultimate wingman for unleashing your
+                    creative genius! With its drag-and-drop interface, even a
+                    pigeon can learn to code!
+                </li>
+                <li>
+                    Who needs a nest when you have Pocket Code? It's your
+                    one-stop-shop for creating interactive stories, games, and
+                    animations that will make your friends flock to you!
+                </li>
+                <li>
+                    Dive into the Catrobat community and join the coding party!
+                    It's like a bird feeder for your brain, filled with ideas
+                    and inspiration!
+                </li>
+            </ul>
+            <p
+                style="
+                    border: 2px groove gold;
+                    padding: 10px;
+                    box-shadow: 0 0 10px gold;
+                    border-radius: 10px;
+                    background-color: black;
+                    color: lime;
+                    display: inline-block;
+                "
+            >
+                <strong>Community Guidelines</strong>
+            </p>
+            <ul class="subtxt">
+                <li>
+                    This program is released under GPL v3.0, ensuring
+                    transparency and collaboration within the community.
+                </li>
+                <li>
+                    You may not use this program for profit purposes ever. It's
+                    all about sharing the fun!
+                </li>
+                <li>
+                    Feel free to remix, learn, and share from the code, but
+                    please credit the original creators and programmers when
+                    sharing within the Catrobat community.
+                </li>
+                <li>
+                    So flap on over, grab your device, and let's soar into the
+                    sky of hilarity and learning with Flappy Bird and Pocket
+                    Code! It's a feather-ruffling good time waiting to happen!
+                </li>
+            </ul>
+            <p
+                style="
+                    border: 2px groove gold;
+                    padding: 10px;
+                    box-shadow: 0 0 10px gold;
+                    border-radius: 10px;
+                    background-color: black;
+                    color: lime;
+                    display: inline-block;
+                "
+            >
+                <strong>Notes and credits</strong>
+            </p>
+            <ul class="subtxt">
+                <li>Copyright .Gears ( 2013 )</li>
+                <li>Designer : Dong Nguyen</li>
+                <li>Sliders By : VelociFaptR</li>
+                <li>Hex2Rgb By : Guildmarco</li>
+                <li>Catroid : Wolfgang Slany</li>
+                <li>Code by Jordan Smith ( 2023 - 2024)</li>
+            </ul>
+        </div>
+        <!-- Footer with quick links -->
+        <footer>
+            Developed by "G Jordan" (2023-2024)
+            <div class="quick-links">
+                <a
+                    href="https://www.facebook.com/share/a8bWwRpM5tp2aXnv/?mibextid=qi2Omg"
+                    target="_blank"
+                >
+                    <img
+                        src="https://img.icons8.com/fluent/48/000000/facebook-new.png"
+                        alt="Facebook Icon"
+                    />
+                </a>
+                <a
+                    href="https://www.instagram.com/g.jordan73?igsh=amprcjA2bTZ3OXFu"
+                    target="_blank"
+                >
+                    <img
+                        src="https://img.icons8.com/fluent/48/000000/instagram-new.png"
+                        alt="Instagram Icon"
+                    />
+                </a>
+                <a
+                    href="https://www.linkedin.com/in/gjordan73?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                    target="_blank"
+                >
+                    <img
+                        src="https://img.icons8.com/fluent/48/000000/linkedin.png"
+                        alt="LinkedIn Icon"
+                    />
+                </a>
+                <a
+                    href="https://youtube.com/@gjordan6692?si=82CTz-CV0Cg5VoJR"
+                    target="_blank"
+                >
+                    <img
+                        src="https://img.icons8.com/fluent/48/000000/youtube-play.png"
+                        alt="YouTube Icon"
+                    />
+                </a>
+            </div>
+        </footer>
+        <div id="custom-alert" class="custom-alert">
+            <h2 class="alert-title">Install Instructions</h2>
+            <p id="alert-message" class="alert-message"></p>
+            <button id="close-btn" class="close-btn" onclick="closeAlert()">
+                OK
+            </button>
+        </div>
+        <script>
+            // JavaScript code goes here
+            document.addEventListener("DOMContentLoaded", function () {
+                var downloadBtn = document.getElementById("downloadBtn");
+                downloadBtn.addEventListener("click", function () {
+                    window.open("https://3ly.link/1xObX", "_blank");
+
+                    // Replace this with your download logic
+                    showAlert(
+                        "To get started, ensure Pocketcode is installed on your device. Once installed, launch the Pocketcode app and navigate to the 'My Programs' section. From there, tap the three dots and select 'Import Project.' Locate the FlappyBird.catrobat file in your Downloads folder and import it. Once imported, you're ready to start playing FlappyBird. Enjoy the game!"
+                    );
+                });
+            });
+
+            function showAlert(message) {
+                var alertBox = document.getElementById("custom-alert");
+                var messageElement = document.getElementById("alert-message");
+                messageElement.textContent = message;
+                alertBox.style.display = "block";
+            }
+
+            function closeAlert() {
+                var alertBox = document.getElementById("custom-alert");
+                alertBox.style.display = "none";
+            }
+        </script>
+        <input type="checkbox" id="toggleButton" class="floating-button" />
+        <label for="toggleButton" class="floating-button"
+            ><i id="queueIcon" class="material-icons">queue_music</i></label
+        >
+
+        <div id="content" class="music-list-container" style="display: none">
+            <div class="wrapper">
+                <div class="top-bar">
+                    <i class="material-icons"></i>
+                    <span
+                        style="
+                            color: lightgoldenrodyellow;
+                            font-size: 20px;
+                            border: 2px groove black;
+                            padding: 10px;
+                            box-shadow: 0 0 10px gold;
+                            border-radius: 30px;
+                            margin-top: 10px;
+                            display: inline-flex;
+                            align-items: center;
+                        "
+                        ><strong>Music Player</strong>
+                        <div
+                            class="info-button"
+                            onclick="showModal()"
+                            style="
+                                width: 30px;
+                                height: 30px;
+                                background-color: darkgoldenrod;
+                                border-radius: 50%;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                color: black;
+                                font-size: 20px;
+                                cursor: pointer;
+                                margin-left: 10px;
+                                padding: 15px;
+                            "
+                        >
+                            <span>i</span>
+                        </div>
+                    </span>
+                    <div
+                        id="floatingButtons"
+                        style="
+                            position: fixed;
+                            top: 20px;
+                            width: 100%;
+                            display: flex;
+                            justify-content: space-between;
+                            padding: 0 20px;
+                            z-index: 9999;
+                        "
+                    >
+                        <button
+                            id="favoriteButton"
+                            onclick="markFavorite()"
+                            style="background-color: transparent; border: none"
+                        >
+                            <i
+                                class="material-icons"
+                                style="font-size: 24px; color: lime"
+                                >favorite</i
+                            >
+                        </button>
+                        <button
+                            id="favoriteSongsButton"
+                            onclick="showFavoriteSongs()"
+                            style="background-color: transparent; border: none"
+                        >
+                            <i
+                                class="material-icons"
+                                style="
+                                    font-size: 24px;
+                                    color: lime;
+                                    margin-right: 15px;
+                                "
+                                >library_music</i
+                            >
+                            <!-- Changed icon to library_music -->
+                        </button>
+                    </div>
+
+                    <div
+                        id="favoriteSongsModal"
+                        class="modal1"
+                        style="margin-top: 60px"
+                    >
+                        <!-- Adjust margin-top to avoid overlap -->
+                        <div
+                            class="modal-content1"
+                            style="
+                                border: 3px groove gold;
+                                box-shadow: 0px 0px 10px gold;
+                                padding: 20px;
+                                border-radius: 23px;
+                            "
+                        >
+                            <span
+                                class="close1"
+                                style="color: red; font-size: 30px"
+                                >&times;</span
+                            >
+                            <div
+                                id="favoriteSongsList"
+                                style="background-color: black"
+                            ></div>
+                        </div>
+                    </div>
+                    <i class="material-icons"></i>
+                </div>
+                <div class="img-area">
+                    <img src="" alt="" />
+                </div>
+                <div class="song-details">
+                    <p class="name"></p>
+                    <p class="artist"></p>
+                </div>
+                <div class="progress-area">
+                    <div class="progress-bar">
+                        <audio id="main-audio" src=""></audio>
+                    </div>
+                    <div class="song-timer">
+                        <span class="current-time">0:00</span>
+                        <span class="max-duration">0:00</span>
+                    </div>
+                </div>
+                <div class="controls">
+                    <i
+                        id="repeat-plist"
+                        class="material-icons"
+                        title="Playlist looped"
+                        >repeat</i
+                    >
+                    <i id="prev" class="material-icons">skip_previous</i>
+                    <div class="play-pause">
+                        <i class="material-icons play">play_arrow</i>
+                    </div>
+                    <i id="next" class="material-icons">skip_next</i>
+                    <i id="more-music" class="material-icons">queue_music</i>
+                </div>
+                <div class="music-list">
+                    <div class="header">
+                        <div class="row">
+                            <i class="list material-icons">queue_music</i>
+                            <span>Music list</span>
+                        </div>
+                        <i id="close" class="material-icons" style="color: red"
+                            >close</i
+                        >
+                    </div>
+                    <ul></ul>
+                </div>
+            </div>
         </div>
 
-
-
-        <div id="favoriteSongsModal" class="modal1" style="margin-top: 60px;"> <!-- Adjust margin-top to avoid overlap -->
-
-          <div class="modal-content1" style="border: 3px groove gold; box-shadow: 0px 0px 10px gold; padding: 20px; border-radius: 23px;">
-
-            <span class="close1">&times;</span>
-
-            <div id="favoriteSongsList" style="background-color: black;"></div>
-
-          </div>
-
-        </div>
-
-        <i class="material-icons"></i>
-
-      </div>
-
-      <div class="img-area">
-
-        <img src="" alt="">
-
-      </div>
-
-      <div class="song-details">
-
-        <p class="name"></p>
-
-        <p class="artist"></p>
-
-      </div>
-
-      <div class="progress-area">
-
-        <div class="progress-bar">
-
-          <audio id="main-audio" src=""></audio>
-
-        </div>
-
-        <div class="song-timer">
-
-          <span class="current-time">0:00</span>
-
-          <span class="max-duration">0:00</span>
-
-        </div>
-
-      </div>
-
-      <div class="controls">
-
-        <i id="repeat-plist" class="material-icons" title="Playlist looped">repeat</i>
-
-        <i id="prev" class="material-icons">skip_previous</i>
-
-        <div class="play-pause">
-
-          <i class="material-icons play">play_arrow</i>
-
-        </div>
-
-        <i id="next" class="material-icons">skip_next</i>
-
-        <i id="more-music" class="material-icons">queue_music</i>
-
-      </div>
-
-      <div class="music-list">
-
-        <div class="header">
-
-          <div class="row">
-
-            <i class="list material-icons">queue_music</i>
-
-            <span>Music list</span>
-
-          </div>
-
-          <i id="close" class="material-icons">close</i>
-
-        </div>
-
-        <ul>
-
-        </ul>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-
-  <div id="modal" class="modal">
-
-    <div class="modal-content">
-
-      <span class="close" onclick="closeModal()">&times;</span>
-
-      <h2 style="padding-bottom: 10px;">Music Player Info</h2>
-
-      <div>
-
-        <h2 style="padding-bottom: 10px;">Features</h2>
-
-        <ul style="padding-bottom: 10px;">
-
-          <li style="padding-bottom: 10px;"><strong>Easy Controls:</strong> Change songs effortlessly while you focus on your tasks, whether you're studying, relaxing, or doing other activities like coding or research.</li>
-
-          <li style="padding-bottom: 10px;"><strong>User-Friendly Interface:</strong> Navigate through your music library with ease, even while you're busy with other tasks. This website's simple and intuitive interface ensures you can find the perfect track without any hassle.</li>
-
-          <li style="padding-bottom: 10px;"><strong>Background Music:</strong> With over 24+ hours of music content, this website's music player is designed to be your constant companion as you tackle your daily activities. Whether you're studying, relaxing, or running errands, let the music be your backdrop as you stay productive and focused.</li>
-
-        </ul>
-
-      </div>
-
-
-
-      <div style="padding-bottom: 20px;">
-
-        <h3 style="padding-bottom: 10px;">Original Source</h3>
-
-        <p>The foundation of this website's music player originated from the exemplary <a href="https://github.com/devesh-y/Music-Player-application">Music-Player-application</a> by <strong>devesh-y.</strong> a remarkable music player template available on GitHub.</p>
-
-      </div>
-
-      <button onclick="closeModal()" style="background-color: black; color: gold; padding: 10px; font-size: 20px; max-width:130px; border-radius: 30%; box-shadow: 0 0 10px gold; display: block; margin: 0 auto;">Back</button>
-
-    </div>
-
-  </div>
-
-
-
-  <div class="conza">
-
-    <div id="editModal" class="modal1" style="display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
-
-      <div class="modal-content1" style="background-color: black; margin: 10% auto; padding: 20px; border: 3px groove black; width: 80%; max-width: 400px; box-shadow: 0px 0px 10px gold; border-radius: 30px;">
-
-        <h2 style="color: gold; margin-bottom: 20px;">Edit Name</h2>
-
-        <label for="songName" style="color: gold;">Enter a new name for the song</label>
-
-        <input type="text" id="songName" placeholder="New Song Name" style="margin-bottom: 30px;  margin-top: 15px; background-color: var(--lightblack); color: lightgoldenrodyellow; padding: 5px; display: flex;">
-
-        <div style="margin-top: 5px; margin-bottom: 5px;">
-
-          <button onclick="saveEditedSong()" style="background-color: black; border: groove gold 3px; padding: 10px; box-shadow: 0px 0px 10px gold; border-radius: 30px; color: gold;">Save</button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-
-  <div id="notification" class="notification">
-
-    <span id="notificationText" class="notification-text"></span>
-
-  </div>
-
-
-
-  <script>
-
-    let mymusic = [
-
-
-
-      {
-
-
-
-        name: "Lazy chill Hip-Hop lofi beats to relax-study to",
-
-        artist: "Chilled Mouse Music",
-
-        img: "music-1",
-
-        src: "music-1"
-
-  },
-
-      {
-
-        name: "Tranquility lofi Hip-Hop beat",
-
-        artist: "unknownuser07",
-
-        img: "music-2",
-
-        src: "music-2"
-
-  },
-
-      {
-
-        name: "3:30 a.m. chill mix",
-
-        artist: "Feardog: Lofi Hip Hop",
-
-        img: "music-3",
-
-        src: "music-3"
-
-  },
-
-      {
-
-        name: "Potion Therapy Music",
-
-        artist: "88DS - Hours of Chill",
-
-        img: "music-4",
-
-        src: "music-4"
-
-  },
-
-      {
-
-        name: "DNDM & Imazee - So Bored",
-
-        artist: "Deep Pressure Radio",
-
-        img: "music-5",
-
-        src: "music-5"
-
-  },
-
-      {
-
-
-
-        name: "1 HR of chill freestyle beats",
-
-        artist: "Noizy",
-
-        img: "music-6",
-
-        src: "music-6"
-
-  },
-
-      {
-
-
-
-        name: "1 HR chill ambient mix",
-
-        artist: "Rocco Roy",
-
-        img: "music-7",
-
-        src: "music-7"
-
-  },
-
-      {
-
-
-
-        name: "1 HR chill gaming mix lofi beats",
-
-        artist: "Pure",
-
-        img: "music-8",
-
-        src: "music-8"
-
-  },
-
-      {
-
-
-
-        name: "1 HR chill lofi Hip Hop mix",
-
-        artist: "VisualDon",
-
-        img: "music-9",
-
-        src: "music-9"
-
-  },
-
-      {
-
-
-
-        name: "Chill Lofi Beats",
-
-        artist: "Settle",
-
-        img: "music-10",
-
-        src: "music-10"
-
-  },
-
-      {
-
-
-
-        name: "1 HR Ambient Music for Studying",
-
-        artist: "Quiet Quest - Study Music",
-
-        img: "music-11",
-
-        src: "music-11"
-
-  },
-
-      {
-
-
-
-        name: "1 a.m. Study Session lofi/hiphop/chill beats",
-
-        artist: "Lofi Girl",
-
-        img: "music-12",
-
-        src: "music-12"
-
-  },
-
-      {
-
-
-
-        name: "forgotten dreams// dark ambient music mix",
-
-        artist: "dreamscape",
-
-        img: "music-13",
-
-        src: "music-13"
-
-  },
-
-      {
-
-
-
-        name: "Night lofi beats to relax/study to",
-
-        artist: "HITO",
-
-        img: "music-14",
-
-        src: "music-14"
-
-  },
-
-      {
-
-
-
-        name: "Beautiful Meditation Mix Study/Relax",
-
-        artist: "MONOMAN",
-
-        img: "music-15",
-
-        src: "music-15"
-
-  },
-
-      {
-
-
-
-        name: "Productive Music for Work | chill Playlist",
-
-        artist: "BLUME",
-
-        img: "music-16",
-
-        src: "music-16"
-
-  },
-
-      {
-
-
-
-        name: "Raining in city - lofi chill night",
-
-        artist: "Lofi in Cities",
-
-        img: "music-17",
-
-        src: "music-17"
-
-  },
-
-      {
-
-
-
-        name: "3 AM Coding Session - Lofi Hip Hop Mix",
-
-        artist: "Lofi Ghostie",
-
-        img: "music-18",
-
-        src: "music-18"
-
-  },
-
-      {
-
-
-
-        name: "Night at Work | Instrumental chill Music Mix",
-
-        artist: "Fluidified",
-
-        img: "music-19",
-
-        src: "music-19"
-
-  },
-
-      {
-
-
-
-        name: "Programming / Coding / Hacking music (Connection Lost)",
-
-        artist: "JimTV",
-
-        img: "music-20",
-
-        src: "music-20"
-
-  },
-
-      {
-
-
-
-        name: "Enchanted Lands Volume 3 | Ambient Fantasy Music",
-
-        artist: "The Guild of Ambience",
-
-        img: "music-21",
-
-        src: "music-21"
-
-  },
-
-      {
-
-
-
-        name: "Sub Zero : Dark SciFi Music for Relaxation",
-
-        artist: "Futurescapes",
-
-        img: "music-22",
-
-        src: "music-22"
-
-  },
-
-      {
-
-
-
-        name: "Tron : Legacy-Ultimate Soundtrack Suite",
-
-        artist: "SuiteSound Music",
-
-        img: "music-23",
-
-        src: "music-23"
-
-  },
-
-      {
-
-
-
-        name: "Post Punk Instrumental & Cold Wave",
-
-        artist: "Russian Sadness",
-
-        img: "music-24",
-
-        src: "music-24"
-
-  },
-
-      {
-
-
-
-        name: "Instrumental Post-Rock Compilation",
-
-        artist: "Epidemic Rock",
-
-        img: "music-25",
-
-        src: "music-25"
-
-  },
-
-      {
-
-
-
-        name: "Shoegaze Playlist",
-
-        artist: "lyr.ically",
-
-        img: "music-26",
-
-        src: "music-26"
-
-  },
-
-      {
-
-
-
-        name: "YOU CAN// NOT // FIX THAT 1 HR BLADERUNNER MUSIC PLAYLIST",
-
-        artist: "CURSEDEVIL",
-
-        img: "music-27",
-
-        src: "music-27"
-
-  },
-
-      {
-
-
-
-        name: "a shoegaze playlist to watch the night ocean waves to",
-
-        artist: "lampoison",
-
-        img: "music-28",
-
-        src: "music-28"
-
-  },
-
-      {
-
-
-
-        name: "Best of Melancholic Post-Rock Mix",
-
-        artist: "Infinite Tea",
-
-        img: "music-29",
-
-        src: "music-29"
-
-  },
-
-      {
-
-
-
-        name: "Distant Memories.",
-
-        artist: "Lost Sounds",
-
-        img: "music-30",
-
-        src: "music-30"
-
-  },
-
-];
-
-
-
-    const wrapper = document.querySelector(".wrapper");
-
-
-
-    const musicImg = wrapper.querySelector(".img-area img");
-
-
-
-    const musicName = wrapper.querySelector(".song-details .name");
-
-    const musicArtist = wrapper.querySelector(".song-details .artist");
-
-    const playPauseBtn = wrapper.querySelector(".play-pause");
-
-    const prevBtn = wrapper.querySelector("#prev");
-
-    const nextBtn = wrapper.querySelector("#next");
-
-    const mainAudio = wrapper.querySelector("#main-audio");
-
-    const progressArea = wrapper.querySelector(".progress-area");
-
-    const progressBar = progressArea.querySelector(".progress-bar");
-
-    const musicList = wrapper.querySelector(".music-list");
-
-    const moreMusicBtn = wrapper.querySelector("#more-music");
-
-    const closemoreMusic = musicList.querySelector("#close");
-
-
-
-    let musicIndex = Math.floor((Math.random() * mymusic.length) + 1);
-
-    isMusicPaused = true;
-
-
-
-    window.addEventListener("load", () => {
-
-      loadMusic(musicIndex);
-
-      playingSong();
-
-    });
-
-
-
-    function loadMusic(indexNumb) {
-
-      musicName.innerText = mymusic[indexNumb - 1].name;
-
-      musicArtist.innerText = mymusic[indexNumb - 1].artist;
-
-      musicImg.src = `images/${mymusic[indexNumb - 1].src}.jpg`;
-
-      mainAudio.src = `songs/${mymusic[indexNumb - 1].src}.m4a`;
-
-    }
-
-
-
-    function playMusic() {
-
-      wrapper.classList.add("paused");
-
-      playPauseBtn.querySelector("i").innerText = "pause";
-
-      mainAudio.play();
-
-    }
-
-
-
-    function pauseMusic() {
-
-      wrapper.classList.remove("paused");
-
-      playPauseBtn.querySelector("i").innerText = "play_arrow";
-
-      mainAudio.pause();
-
-    }
-
-
-
-
-
-    function prevMusic() {
-
-      musicIndex--;
-
-
-
-      musicIndex < 1 ? musicIndex = mymusic.length : musicIndex = musicIndex;
-
-      loadMusic(musicIndex);
-
-      playMusic();
-
-      playingSong();
-
-    }
-
-
-
-    function nextMusic() {
-
-      musicIndex++;
-
-
-
-      musicIndex > mymusic.length ? musicIndex = 1 : musicIndex = musicIndex;
-
-      loadMusic(musicIndex);
-
-      playMusic();
-
-      playingSong();
-
-    }
-
-
-
-
-
-    playPauseBtn.addEventListener("click", () => {
-
-      const isMusicPlay = wrapper.classList.contains("paused");
-
-      isMusicPlay ? pauseMusic() : playMusic();
-
-      playingSong();
-
-    });
-
-
-
-    prevBtn.addEventListener("click", () => {
-
-      prevMusic();
-
-    });
-
-
-
-
-
-    nextBtn.addEventListener("click", () => {
-
-      nextMusic();
-
-    });
-
-
-
-    mainAudio.addEventListener("timeupdate", (e) => {
-
-      const currentTime = e.target.currentTime;
-
-      const duration = e.target.duration;
-
-      let progressWidth = (currentTime / duration) * 100;
-
-      progressBar.style.width = `${progressWidth}%`;
-
-
-
-      let musicCurrentTime = wrapper.querySelector(".current-time"),
-
-        musicDuartion = wrapper.querySelector(".max-duration");
-
-      mainAudio.addEventListener("loadeddata", () => {
-
-
-
-        let mainAdDuration = mainAudio.duration;
-
-        let totalMin = Math.floor(mainAdDuration / 60);
-
-        let totalSec = Math.floor(mainAdDuration % 60);
-
-        if (totalSec < 10) {
-
-          totalSec = `0${totalSec}`;
-
-        }
-
-        musicDuartion.innerText = `${totalMin}:${totalSec}`;
-
-      });
-
-
-
-      let currentMin = Math.floor(currentTime / 60);
-
-      let currentSec = Math.floor(currentTime % 60);
-
-      if (currentSec < 10) {
-
-        currentSec = `0${currentSec}`;
-
-      }
-
-      musicCurrentTime.innerText = `${currentMin}:${currentSec}`;
-
-    });
-
-
-
-    progressArea.addEventListener("click", (e) => {
-
-      let progressWidth = progressArea.clientWidth;
-
-      let clickedOffsetX = e.offsetX;
-
-      let songDuration = mainAudio.duration;
-
-
-
-      mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
-
-      playMusic();
-
-      playingSong();
-
-    });
-
-
-
-    const repeatBtn = wrapper.querySelector("#repeat-plist");
-
-    repeatBtn.addEventListener("click", () => {
-
-      let getText = repeatBtn.innerText;
-
-      switch (getText) {
-
-        case "repeat":
-
-          repeatBtn.innerText = "repeat_one";
-
-          repeatBtn.setAttribute("title", "Song looped");
-
-          break;
-
-        case "repeat_one":
-
-          repeatBtn.innerText = "shuffle";
-
-          repeatBtn.setAttribute("title", "Playback shuffled");
-
-          break;
-
-        case "shuffle":
-
-          repeatBtn.innerText = "repeat";
-
-          repeatBtn.setAttribute("title", "Playlist looped");
-
-          break;
-
-      }
-
-    });
-
-
-
-
-
-    mainAudio.addEventListener("ended", () => {
-
-      let getText = repeatBtn.innerText;
-
-      switch (getText) {
-
-        case "repeat":
-
-          nextMusic();
-
-          break;
-
-        case "repeat_one":
-
-          mainAudio.currentTime = 0;
-
-          loadMusic(musicIndex);
-
-          playMusic();
-
-          break;
-
-        case "shuffle":
-
-          let randIndex = Math.floor((Math.random() * mymusic.length) + 1);
-
-          do {
-
-            randIndex = Math.floor((Math.random() * mymusic.length) + 1);
-
-          } while (musicIndex == randIndex);
-
-          musicIndex = randIndex;
-
-          loadMusic(musicIndex);
-
-          playMusic();
-
-          playingSong();
-
-          break;
-
-      }
-
-    });
-
-
-
-    moreMusicBtn.addEventListener("click", () => {
-
-      musicList.classList.toggle("show");
-
-    });
-
-    closemoreMusic.addEventListener("click", () => {
-
-      moreMusicBtn.click();
-
-    });
-
-
-
-    const ulTag = wrapper.querySelector("ul");
-
-    for (let i = 0; i < mymusic.length; i++) {
-
-      let liTag = `<li li-index="${i + 1}">
-
-                <div class="row">
-
-                  <span>${mymusic[i].name}</span>
-
-                  <p>${mymusic[i].artist}</p>
-
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2 style="padding-bottom: 10px">Music Player Info</h2>
+                <div>
+                    <h2 style="padding-bottom: 10px">Features</h2>
+                    <ul style="padding-bottom: 10px">
+                        <li style="padding-bottom: 10px">
+                            <strong>Easy Controls:</strong> Change songs
+                            effortlessly while you focus on your tasks, whether
+                            you're studying, relaxing, or doing other activities
+                            like coding or research.
+                        </li>
+                        <li style="padding-bottom: 10px">
+                            <strong>User-Friendly Interface:</strong> Navigate
+                            through your music library with ease, even while
+                            you're busy with other tasks. This website's simple
+                            and intuitive interface ensures you can find the
+                            perfect track without any hassle.
+                        </li>
+                        <li style="padding-bottom: 10px">
+                            <strong>Background Music:</strong> With over 24+
+                            hours of music content, this website's music player
+                            is designed to be your constant companion as you
+                            tackle your daily activities. Whether you're
+                            studying, relaxing, or running errands, let the
+                            music be your backdrop as you stay productive and
+                            focused.
+                        </li>
+                        <li style="padding-bottom: 10px">
+                            <strong>Favorite Songs Management:</strong>
+                            <ul>
+                                <li>
+                                    Mark songs as favorites at specific times
+                                </li>
+                                <li>
+                                    Display a modal to manage favorite songs
+                                </li>
+                                <li>
+                                    Options to play, edit, or delete favorite
+                                    songs
+                                </li>
+                                <li>
+                                    Store favorite songs data locally using
+                                    local storage
+                                </li>
+                                <li>
+                                    Load and save favorite songs to/from local
+                                    storage
+                                </li>
+                                <li>
+                                    Edit and delete favorite songs with ease
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
 
+                <div style="padding-bottom: 20px">
+                    <h3 style="padding-bottom: 10px">Original Source</h3>
+                    <p>
+                        The foundation of this website's music player originated
+                        from the exemplary
+                        <a
+                            href="https://github.com/devesh-y/Music-Player-application"
+                            >Music-Player-application</a
+                        >
+                        by <strong>devesh-y.</strong> a remarkable music player
+                        template available on GitHub.
+                    </p>
+                </div>
+
+                <button
+                    onclick="closeModal()"
+                    style="
+                        background-color: black;
+                        color: gold;
+                        padding: 10px;
+                        font-size: 20px;
+                        max-width: 130px;
+                        border-radius: 30%;
+                        box-shadow: 0 0 10px gold;
+                        display: block;
+                        margin: 0 auto;
+                    "
+                >
+                    Back
+                </button>
+            </div>
+        </div>
+
+        <div class="conza">
+            <div
+                id="editModal"
+                class="modal1"
+                style="
+                    display: none;
+                    position: fixed;
+                    z-index: 9999;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.5);
+                "
+            >
+                <div
+                    class="modal-content1"
+                    style="
+                        background-color: black;
+                        margin: 10% auto;
+                        padding: 20px;
+                        border: 3px groove black;
+                        width: 80%;
+                        max-width: 400px;
+                        box-shadow: 0px 0px 10px gold;
+                        border-radius: 30px;
+                    "
+                >
+                    <h2 style="color: gold; margin-bottom: 20px">Edit Name</h2>
+                    <label for="songName" style="color: gold"
+                        >Enter a new name for the song</label
+                    >
+                    <input
+                        type="text"
+                        id="songName"
+                        placeholder="New Song Name"
+                        style="
+                            margin-bottom: 30px;
+                            margin-top: 15px;
+                            background-color: var(--lightblack);
+                            color: lightgoldenrodyellow;
+                            padding: 5px;
+                            display: flex;
+                        "
+                    />
+                    <div style="margin-top: 5px; margin-bottom: 5px">
+                        <button
+                            onclick="saveEditedSong()"
+                            style="
+                                background-color: black;
+                                border: groove gold 3px;
+                                padding: 10px;
+                                box-shadow: 0px 0px 10px gold;
+                                border-radius: 30px;
+                                color: gold;
+                            "
+                        >
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="notification" class="notification">
+            <span id="notificationText" class="notification-text"></span>
+        </div>
+
+        <script>
+            let mymusic = [
+                {
+                    name: "Lazy chill Hip-Hop lofi beats to relax-study to",
+                    artist: "Chilled Mouse Music",
+                    img: "music-1",
+                    src: "music-1"
+                },
+                {
+                    name: "Tranquility lofi Hip-Hop beat",
+                    artist: "unknownuser07",
+                    img: "music-2",
+                    src: "music-2"
+                },
+                {
+                    name: "3:30 a.m. chill mix",
+                    artist: "Feardog: Lofi Hip Hop",
+                    img: "music-3",
+                    src: "music-3"
+                },
+                {
+                    name: "Potion Therapy Music",
+                    artist: "88DS - Hours of Chill",
+                    img: "music-4",
+                    src: "music-4"
+                },
+                {
+                    name: "DNDM & Imazee - So Bored",
+                    artist: "Deep Pressure Radio",
+                    img: "music-5",
+                    src: "music-5"
+                },
+                {
+                    name: "1 HR of chill freestyle beats",
+                    artist: "Noizy",
+                    img: "music-6",
+                    src: "music-6"
+                },
+                {
+                    name: "1 HR chill ambient mix",
+                    artist: "Rocco Roy",
+                    img: "music-7",
+                    src: "music-7"
+                },
+                {
+                    name: "1 HR chill gaming mix lofi beats",
+                    artist: "Pure",
+                    img: "music-8",
+                    src: "music-8"
+                },
+                {
+                    name: "1 HR chill lofi Hip Hop mix",
+                    artist: "VisualDon",
+                    img: "music-9",
+                    src: "music-9"
+                },
+                {
+                    name: "Chill Lofi Beats",
+                    artist: "Settle",
+                    img: "music-10",
+                    src: "music-10"
+                },
+                {
+                    name: "1 HR Ambient Music for Studying",
+                    artist: "Quiet Quest - Study Music",
+                    img: "music-11",
+                    src: "music-11"
+                },
+                {
+                    name: "1 a.m. Study Session lofi/hiphop/chill beats",
+                    artist: "Lofi Girl",
+                    img: "music-12",
+                    src: "music-12"
+                },
+                {
+                    name: "forgotten dreams// dark ambient music mix",
+                    artist: "dreamscape",
+                    img: "music-13",
+                    src: "music-13"
+                },
+                {
+                    name: "Night lofi beats to relax/study to",
+                    artist: "HITO",
+                    img: "music-14",
+                    src: "music-14"
+                },
+                {
+                    name: "Beautiful Meditation Mix Study/Relax",
+                    artist: "MONOMAN",
+                    img: "music-15",
+                    src: "music-15"
+                },
+                {
+                    name: "Productive Music for Work | chill Playlist",
+                    artist: "BLUME",
+                    img: "music-16",
+                    src: "music-16"
+                },
+                {
+                    name: "Raining in city - lofi chill night",
+                    artist: "Lofi in Cities",
+                    img: "music-17",
+                    src: "music-17"
+                },
+                {
+                    name: "3 AM Coding Session - Lofi Hip Hop Mix",
+                    artist: "Lofi Ghostie",
+                    img: "music-18",
+                    src: "music-18"
+                },
+                {
+                    name: "Night at Work | Instrumental chill Music Mix",
+                    artist: "Fluidified",
+                    img: "music-19",
+                    src: "music-19"
+                },
+                {
+                    name: "Programming / Coding / Hacking music (Connection Lost)",
+                    artist: "JimTV",
+                    img: "music-20",
+                    src: "music-20"
+                },
+                {
+                    name: "Enchanted Lands Volume 3 | Ambient Fantasy Music",
+                    artist: "The Guild of Ambience",
+                    img: "music-21",
+                    src: "music-21"
+                },
+                {
+                    name: "Sub Zero : Dark SciFi Music for Relaxation",
+                    artist: "Futurescapes",
+                    img: "music-22",
+                    src: "music-22"
+                },
+                {
+                    name: "Tron : Legacy-Ultimate Soundtrack Suite",
+                    artist: "SuiteSound Music",
+                    img: "music-23",
+                    src: "music-23"
+                },
+                {
+                    name: "Post Punk Instrumental & Cold Wave",
+                    artist: "Russian Sadness",
+                    img: "music-24",
+                    src: "music-24"
+                },
+                {
+                    name: "Instrumental Post-Rock Compilation",
+                    artist: "Epidemic Rock",
+                    img: "music-25",
+                    src: "music-25"
+                },
+                {
+                    name: "Shoegaze Playlist",
+                    artist: "lyr.ically",
+                    img: "music-26",
+                    src: "music-26"
+                },
+                {
+                    name: "YOU CAN// NOT // FIX THAT 1 HR BLADERUNNER MUSIC PLAYLIST",
+                    artist: "CURSEDEVIL",
+                    img: "music-27",
+                    src: "music-27"
+                },
+                {
+                    name: "a shoegaze playlist to watch the night ocean waves to",
+                    artist: "lampoison",
+                    img: "music-28",
+                    src: "music-28"
+                },
+                {
+                    name: "Best of Melancholic Post-Rock Mix",
+                    artist: "Infinite Tea",
+                    img: "music-29",
+                    src: "music-29"
+                },
+                {
+                    name: "Distant Memories.",
+                    artist: "Lost Sounds",
+                    img: "music-30",
+                    src: "music-30"
+                }
+            ];
+
+            const wrapper = document.querySelector(".wrapper");
+
+            const musicImg = wrapper.querySelector(".img-area img");
+
+            const musicName = wrapper.querySelector(".song-details .name");
+            const musicArtist = wrapper.querySelector(".song-details .artist");
+            const playPauseBtn = wrapper.querySelector(".play-pause");
+            const prevBtn = wrapper.querySelector("#prev");
+            const nextBtn = wrapper.querySelector("#next");
+            const mainAudio = wrapper.querySelector("#main-audio");
+            const progressArea = wrapper.querySelector(".progress-area");
+            const progressBar = progressArea.querySelector(".progress-bar");
+            const musicList = wrapper.querySelector(".music-list");
+            const moreMusicBtn = wrapper.querySelector("#more-music");
+            const closemoreMusic = musicList.querySelector("#close");
+
+            let musicIndex = Math.floor(Math.random() * mymusic.length + 1);
+            isMusicPaused = true;
+
+            window.addEventListener("load", () => {
+                loadMusic(musicIndex);
+                playingSong();
+            });
+
+            function loadMusic(indexNumb) {
+                musicName.innerText = mymusic[indexNumb - 1].name;
+                musicArtist.innerText = mymusic[indexNumb - 1].artist;
+                musicImg.src = `images/${mymusic[indexNumb - 1].src}.jpg`;
+                mainAudio.src = `songs/${mymusic[indexNumb - 1].src}.m4a`;
+            }
+
+            function playMusic() {
+                wrapper.classList.add("paused");
+                playPauseBtn.querySelector("i").innerText = "pause";
+                mainAudio.play();
+            }
+
+            function pauseMusic() {
+                wrapper.classList.remove("paused");
+                playPauseBtn.querySelector("i").innerText = "play_arrow";
+                mainAudio.pause();
+            }
+
+            function prevMusic() {
+                musicIndex--;
+
+                musicIndex < 1
+                    ? (musicIndex = mymusic.length)
+                    : (musicIndex = musicIndex);
+                loadMusic(musicIndex);
+                playMusic();
+                playingSong();
+            }
+
+            function nextMusic() {
+                musicIndex++;
+
+                musicIndex > mymusic.length
+                    ? (musicIndex = 1)
+                    : (musicIndex = musicIndex);
+                loadMusic(musicIndex);
+                playMusic();
+                playingSong();
+            }
+
+            playPauseBtn.addEventListener("click", () => {
+                const isMusicPlay = wrapper.classList.contains("paused");
+                isMusicPlay ? pauseMusic() : playMusic();
+                playingSong();
+            });
+
+            prevBtn.addEventListener("click", () => {
+                prevMusic();
+            });
+
+            nextBtn.addEventListener("click", () => {
+                nextMusic();
+            });
+
+            mainAudio.addEventListener("timeupdate", e => {
+                const currentTime = e.target.currentTime;
+                const duration = e.target.duration;
+                let progressWidth = (currentTime / duration) * 100;
+                progressBar.style.width = `${progressWidth}%`;
+
+                let musicCurrentTime = wrapper.querySelector(".current-time"),
+                    musicDuartion = wrapper.querySelector(".max-duration");
+                mainAudio.addEventListener("loadeddata", () => {
+                    let mainAdDuration = mainAudio.duration;
+                    let totalMin = Math.floor(mainAdDuration / 60);
+                    let totalSec = Math.floor(mainAdDuration % 60);
+                    if (totalSec < 10) {
+                        totalSec = `0${totalSec}`;
+                    }
+                    musicDuartion.innerText = `${totalMin}:${totalSec}`;
+                });
+
+                let currentMin = Math.floor(currentTime / 60);
+                let currentSec = Math.floor(currentTime % 60);
+                if (currentSec < 10) {
+                    currentSec = `0${currentSec}`;
+                }
+                musicCurrentTime.innerText = `${currentMin}:${currentSec}`;
+            });
+
+            progressArea.addEventListener("click", e => {
+                let progressWidth = progressArea.clientWidth;
+                let clickedOffsetX = e.offsetX;
+                let songDuration = mainAudio.duration;
+
+                mainAudio.currentTime =
+                    (clickedOffsetX / progressWidth) * songDuration;
+                playMusic();
+                playingSong();
+            });
+
+            const repeatBtn = wrapper.querySelector("#repeat-plist");
+            repeatBtn.addEventListener("click", () => {
+                let getText = repeatBtn.innerText;
+                switch (getText) {
+                    case "repeat":
+                        repeatBtn.innerText = "repeat_one";
+                        repeatBtn.setAttribute("title", "Song looped");
+                        break;
+                    case "repeat_one":
+                        repeatBtn.innerText = "shuffle";
+                        repeatBtn.setAttribute("title", "Playback shuffled");
+                        break;
+                    case "shuffle":
+                        repeatBtn.innerText = "repeat";
+                        repeatBtn.setAttribute("title", "Playlist looped");
+                        break;
+                }
+            });
+
+            mainAudio.addEventListener("ended", () => {
+                let getText = repeatBtn.innerText;
+                switch (getText) {
+                    case "repeat":
+                        nextMusic();
+                        break;
+                    case "repeat_one":
+                        mainAudio.currentTime = 0;
+                        loadMusic(musicIndex);
+                        playMusic();
+                        break;
+                    case "shuffle":
+                        let randIndex = Math.floor(
+                            Math.random() * mymusic.length + 1
+                        );
+                        do {
+                            randIndex = Math.floor(
+                                Math.random() * mymusic.length + 1
+                            );
+                        } while (musicIndex == randIndex);
+                        musicIndex = randIndex;
+                        loadMusic(musicIndex);
+                        playMusic();
+                        playingSong();
+                        break;
+                }
+            });
+
+            moreMusicBtn.addEventListener("click", () => {
+                musicList.classList.toggle("show");
+            });
+            closemoreMusic.addEventListener("click", () => {
+                moreMusicBtn.click();
+            });
+
+            const ulTag = wrapper.querySelector("ul");
+            for (let i = 0; i < mymusic.length; i++) {
+                let liTag = `<li li-index="${i + 1}">
+                <div class="row">
+                  <span>${mymusic[i].name}</span>
+                  <p>${mymusic[i].artist}</p>
+                </div>
                 <span id="${mymusic[i].src}" class="audio-duration">3:40</span>
-
-                <audio class="${mymusic[i].src}" src="songs/${mymusic[i].src}.m4a"></audio>
-
+                <audio class="${mymusic[i].src}" src="songs/${
+                    mymusic[i].src
+                }.m4a"></audio>
               </li>`;
-
-      ulTag.insertAdjacentHTML("beforeend", liTag);
-
-
-
-      let liAudioDuartionTag = ulTag.querySelector(`#${mymusic[i].src}`);
-
-      let liAudioTag = ulTag.querySelector(`.${mymusic[i].src}`);
-
-      liAudioTag.addEventListener("loadeddata", () => {
-
-        let duration = liAudioTag.duration;
-
-        let totalMin = Math.floor(duration / 60);
-
-        let totalSec = Math.floor(duration % 60);
-
-        if (totalSec < 10) {
-
-          totalSec = `0${totalSec}`;
-
-        };
-
-        liAudioDuartionTag.innerText = `${totalMin}:${totalSec}`;
-
-        liAudioDuartionTag.setAttribute("t-duration", `${totalMin}:${totalSec}`);
-
-      });
-
-    }
-
-
-
-    function playingSong() {
-
-      const allLiTag = ulTag.querySelectorAll("li");
-
-
-
-      for (let j = 0; j < allLiTag.length; j++) {
-
-        let audioTag = allLiTag[j].querySelector(".audio-duration");
-
-
-
-        if (allLiTag[j].classList.contains("playing")) {
-
-          allLiTag[j].classList.remove("playing");
-
-          let adDuration = audioTag.getAttribute("t-duration");
-
-          audioTag.innerText = adDuration;
-
-        }
-
-
-
-        if (allLiTag[j].getAttribute("li-index") == musicIndex) {
-
-          allLiTag[j].classList.add("playing");
-
-          audioTag.innerText = "Playing";
-
-        }
-
-
-
-        allLiTag[j].setAttribute("onclick", "clicked(this)");
-
-      }
-
-    }
-
-
-
-    function clicked(element) {
-
-      let getLiIndex = element.getAttribute("li-index");
-
-      musicIndex = getLiIndex;
-
-      loadMusic(musicIndex);
-
-      playMusic();
-
-      playingSong();
-
-    }
-
-    const toggleButton = document.getElementById("toggleButton");
-
-    const content = document.getElementById("content");
-
-    toggleButton.addEventListener("click", () => {
-
-      content.style.display = content.style.display === "none" ? "block" : "none";
-
-    });
-
-
-
-    let isProgressDragging = false;
-
-
-
-    progressArea.addEventListener("touchstart", (e) => {
-
-      isProgressDragging = true;
-
-      updateProgressBar(e.touches[0]);
-
-    });
-
-
-
-    progressArea.addEventListener("touchmove", (e) => {
-
-      if (isProgressDragging) {
-
-        updateProgressBar(e.touches[0]);
-
-      }
-
-    });
-
-
-
-    progressArea.addEventListener("touchend", () => {
-
-      isProgressDragging = false;
-
-    });
-
-
-
-    function updateProgressBar(touch) {
-
-      const rect = progressArea.getBoundingClientRect();
-
-      const progressWidth = rect.width;
-
-      const clickedOffsetX = touch.clientX - rect.left;
-
-      const songDuration = mainAudio.duration;
-
-
-
-      mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
-
-      playMusic();
-
-      playingSong();
-
-    }
-
-  </script>
-
-  <script>
-
-    function showModal() {
-
-      document.getElementById("modal").style.display = "block";
-
-    }
-
-
-
-    function closeModal() {
-
-      document.getElementById("modal").style.display = "none";
-
-    }
-
-
-
-    // Array to store favorite songs along with their favorite times
-
-    let favoriteSongs = [];
-
-
-
-    // Function to mark the current song as favorite at the current time
-
-    function markFavorite() {
-
-      const currentTime = mainAudio.currentTime;
-
-      const currentSong = mymusic[musicIndex - 1]; // Assuming mymusic is an array containing all songs
-
-      const currentFavorite = {
-
-        songIndex: musicIndex,
-
-        name: currentSong.name, // Assuming currentSong has a property "name" that holds the song's name
-
-        time: currentTime
-
-      };
-
-      favoriteSongs.push(currentFavorite);
-
-      saveFavoriteSongs(); // Save favorite songs to local storage
-
-
-
-      // Show styled notification
-
-      const notificationText = document.getElementById("notificationText");
-
-      notificationText.innerText = "Saved To Favorites.";
-
-      const notification = document.getElementById("notification");
-
-      notification.classList.add("show");
-
-
-
-      // Hide notification after a certain time (e.g., 3 seconds)
-
-      setTimeout(function() {
-
-        notification.classList.remove("show");
-
-      }, 3000);
-
-    }
-
-
-
-    // Function to display favorite songs with play, edit, and delete buttons in a modal
-
-    function showFavoriteSongs() {
-
-      let modal = document.getElementById("favoriteSongsModal");
-
-      let favoriteSongsList = document.getElementById("favoriteSongsList");
-
-      favoriteSongsList.innerHTML = "<h2>Favorite Songs</h2>"; // Clear previous list
-
-
-
-      favoriteSongs.forEach((song, index) => {
-
-        const { songIndex, time, name } = song;
-
-        const currentSong = mymusic[songIndex - 1];
-
-        let listItem = document.createElement("div");
-
-        listItem.innerHTML = `
-
-            <p style="padding: 10px; margin-bottom: 15px; margin-top: 35px; border: groove black 3px; border-radius: 15px; box-shadow: 0px 0px 10px gold;">Name: ${name}, Artist: ${currentSong.artist}, Time: ${formatTime(time)}</p>
-
-<button class="playButton${index + 1}" onclick="playFavoriteSong(${songIndex}, ${time})" style="background-color: black; border: 3px groove gold; box-shadow: 0px 0px 10px gold; padding: 10px; border-radius: 50%; margin-right: 10px;">
-
-    <i class="material-icons" style="color: green; vertical-align: middle; margin-left: 1px;">play_arrow</i>
-
-</button>
-
-
-
-<button class="editButton${index + 1}" onclick="editFavoriteSong(${index})" style="background-color: black; border: 3px groove gold; box-shadow: 0px 0px 10px gold; padding: 10px; border-radius: 50%; margin-right: 10px;">
-
-    <i class="material-icons" style="color: gold; vertical-align: middle; margin-left: 1px;">edit</i>
-
-</button>
-
-
-
-<button class="deleteButton${index + 1}" onclick="deleteFavoriteSong(${index})" style="background-color: black; border: 3px groove gold; box-shadow: 0px 0px 10px gold; padding: 10px; border-radius: 50%;">
-
-    <i class="material-icons" style="color: red; vertical-align: middle; margin-left: 1px;">delete</i>
-
-</button>
-
-
-
-        `;
-
-        favoriteSongsList.appendChild(listItem);
-
-      });
-
-
-
-      modal.style.display = "block";
-
-
-
-      // Close the modal when the close button is clicked
-
-      let closeBtn = modal.querySelector(".close1");
-
-      closeBtn.onclick = function() {
-
-        modal.style.display = "none";
-
-      }
-
-    }
-
-
-
-    // Function to play a favorite song at the specified time
-
-    function playFavoriteSong(songIndex, timeInSeconds) {
-
-      musicIndex = songIndex;
-
-      loadMusic(musicIndex);
-
-      mainAudio.currentTime = timeInSeconds;
-
-      playMusic();
-
-      playingSong();
-
-      let modal = document.getElementById("favoriteSongsModal");
-
-      modal.style.display = "none";
-
-    }
-
-
-
-    // Function to format time in MM:SS format
-
-    function formatTime(timeInSeconds) {
-
-      const minutes = Math.floor(timeInSeconds / 60);
-
-      const seconds = Math.floor(timeInSeconds % 60);
-
-      return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-
-    }
-
-    // Function to delete a favorite song
-
-    function deleteFavoriteSong(index) {
-
-      favoriteSongs.splice(index, 1);
-
-      showFavoriteSongs(); // Refresh the display after deletion
-
-    }
-
-    // Function to save favorite songs to local storage
-
-    function saveFavoriteSongs() {
-
-      localStorage.setItem("favoriteSongs", JSON.stringify(favoriteSongs));
-
-    }
-
-
-
-    // Function to load favorite songs from local storage
-
-    function loadFavoriteSongs() {
-
-      let savedFavoriteSongs = localStorage.getItem("favoriteSongs");
-
-      if (savedFavoriteSongs) {
-
-        favoriteSongs = JSON.parse(savedFavoriteSongs);
-
-      }
-
-    }
-
-
-
-    // Call loadFavoriteSongs when the page loads to load saved favorite songs
-
-    window.addEventListener("load", loadFavoriteSongs);
-
-
-
-    // Function to delete a favorite song
-
-    function deleteFavoriteSong(index) {
-
-      favoriteSongs.splice(index, 1);
-
-      saveFavoriteSongs(); // Save favorite songs after deletion
-
-      showFavoriteSongs(); // Refresh the display after deletion
-
-    }
-
-    // Function to edit the name of a favorite song
-
-    let editingIndex; // Global variable to keep track of which song is being edited
-
-
-
-    function editFavoriteSong(index) {
-
-      editingIndex = index;
-
-      showEditModal(index);
-
-    }
-
-    // Function to show the edit modal
-
-    function showEditModal(index) {
-
-      const modal = document.getElementById("editModal");
-
-      const songNameInput = document.getElementById("songName");
-
-      songNameInput.value = favoriteSongs[index].name;
-
-      modal.style.display = "block";
-
-    }
-
-
-
-    // Function to save the edited song name
-
-    function saveEditedSong() {
-
-      const newName = document.getElementById("songName").value.trim();
-
-      if (newName !== "") {
-
-        favoriteSongs[editingIndex].name = newName;
-
-        saveFavoriteSongs(); // Save favorite songs after editing
-
-        showFavoriteSongs(); // Refresh the display after editing
-
-        closeEditModal();
-
-      }
-
-    }
-
-
-
-    // Function to close the edit modal
-
-    function closeEditModal() {
-
-      const modal = document.getElementById("editModal");
-
-      modal.style.display = "none";
-
-    }
-
-    // Function to close the modal for renaming the song
-
-    function closeRenameModal() {
-
-      let renameModal = document.getElementById("renameModal");
-
-      renameModal.style.display = "none";
-
-    }
-
-
-
-    // Add event listener to the exit button for renaming the song
-
-    const exitRenameButton = document.getElementById("exitRenameButton");
-
-    exitRenameButton.addEventListener("click", closeRenameModal);
-
-  </script>
-
-</body>
-
-<script>
-
-  document.addEventListener('DOMContentLoaded', function() {
-
-    // Select the checkbox and the icon
-
-    const toggleButton = document.getElementById('toggleButton');
-
-    const queueIcon = document.getElementById('queueIcon');
-
-
-
-    // Add event listener to the checkbox
-
-    toggleButton.addEventListener('change', function() {
-
-      if (toggleButton.checked) {
-
-        // Change the icon to exit_to_app when checkbox is checked
-
-        queueIcon.textContent = 'exit_to_app';
-
-      } else {
-
-        // Change the icon back to queue_music when checkbox is unchecked
-
-        queueIcon.textContent = 'queue_music';
-
-      }
-
-    });
-
-  });
-
-</script>
-
-
-
-        </html>
+                ulTag.insertAdjacentHTML("beforeend", liTag);
+
+                let liAudioDuartionTag = ulTag.querySelector(
+                    `#${mymusic[i].src}`
+                );
+                let liAudioTag = ulTag.querySelector(`.${mymusic[i].src}`);
+                liAudioTag.addEventListener("loadeddata", () => {
+                    let duration = liAudioTag.duration;
+                    let totalMin = Math.floor(duration / 60);
+                    let totalSec = Math.floor(duration % 60);
+                    if (totalSec < 10) {
+                        totalSec = `0${totalSec}`;
+                    }
+                    liAudioDuartionTag.innerText = `${totalMin}:${totalSec}`;
+                    liAudioDuartionTag.setAttribute(
+                        "t-duration",
+                        `${totalMin}:${totalSec}`
+                    );
+                });
+            }
+
+            function playingSong() {
+                const allLiTag = ulTag.querySelectorAll("li");
+
+                for (let j = 0; j < allLiTag.length; j++) {
+                    let audioTag = allLiTag[j].querySelector(".audio-duration");
+
+                    if (allLiTag[j].classList.contains("playing")) {
+                        allLiTag[j].classList.remove("playing");
+                        let adDuration = audioTag.getAttribute("t-duration");
+                        audioTag.innerText = adDuration;
+                    }
+
+                    if (allLiTag[j].getAttribute("li-index") == musicIndex) {
+                        allLiTag[j].classList.add("playing");
+                        audioTag.innerText = "Playing";
+                    }
+
+                    allLiTag[j].setAttribute("onclick", "clicked(this)");
+                }
+            }
+
+            function clicked(element) {
+                let getLiIndex = element.getAttribute("li-index");
+                musicIndex = getLiIndex;
+                loadMusic(musicIndex);
+                playMusic();
+                playingSong();
+            }
+            const toggleButton = document.getElementById("toggleButton");
+            const content = document.getElementById("content");
+            toggleButton.addEventListener("click", () => {
+                content.style.display =
+                    content.style.display === "none" ? "block" : "none";
+            });
+
+            let isProgressDragging = false;
+
+            progressArea.addEventListener("touchstart", e => {
+                isProgressDragging = true;
+                updateProgressBar(e.touches[0]);
+            });
+
+            progressArea.addEventListener("touchmove", e => {
+                if (isProgressDragging) {
+                    updateProgressBar(e.touches[0]);
+                }
+            });
+
+            progressArea.addEventListener("touchend", () => {
+                isProgressDragging = false;
+            });
+
+            function updateProgressBar(touch) {
+                const rect = progressArea.getBoundingClientRect();
+                const progressWidth = rect.width;
+                const clickedOffsetX = touch.clientX - rect.left;
+                const songDuration = mainAudio.duration;
+
+                mainAudio.currentTime =
+                    (clickedOffsetX / progressWidth) * songDuration;
+                playMusic();
+                playingSong();
+            }
+        </script>
+        <script>
+            function showModal() {
+                document.getElementById("modal").style.display = "block";
+            }
+
+            function closeModal() {
+                document.getElementById("modal").style.display = "none";
+            }
+
+            // Array to store favorite songs along with their favorite times
+            let favoriteSongs = [];
+
+            // Function to mark the current song as favorite at the current time
+            function markFavorite() {
+                const currentTime = mainAudio.currentTime;
+                const currentSong = mymusic[musicIndex - 1]; // Assuming mymusic is an array containing all songs
+                const currentFavorite = {
+                    songIndex: musicIndex,
+                    name: currentSong.name, // Assuming currentSong has a property "name" that holds the song's name
+                    time: currentTime
+                };
+                favoriteSongs.push(currentFavorite);
+                saveFavoriteSongs(); // Save favorite songs to local storage
+
+                // Show styled notification
+                const notificationText =
+                    document.getElementById("notificationText");
+                notificationText.innerText = "Saved To Favorites.";
+                const notification = document.getElementById("notification");
+                notification.classList.add("show");
+
+                // Hide notification after a certain time (e.g., 3 seconds)
+                setTimeout(function () {
+                    notification.classList.remove("show");
+                }, 3000);
+            }
+
+            // Function to display favorite songs with play, edit, and delete buttons in a modal
+            function showFavoriteSongs() {
+                let modal = document.getElementById("favoriteSongsModal");
+                let favoriteSongsList =
+                    document.getElementById("favoriteSongsList");
+                favoriteSongsList.innerHTML = "<h2>Favorite Songs</h2>"; // Clear previous list
+
+                favoriteSongs.forEach((song, index) => {
+                    const { songIndex, time, name } = song;
+                    const currentSong = mymusic[songIndex - 1];
+                    let listItem = document.createElement("div");
+                    listItem.style.textAlign = "center"; // Center text horizontally
+                    listItem.innerHTML = `
+        <p style="padding: 10px; margin: 20px 0 30px; border: groove black 3px; border-radius: 15px; box-shadow: 0px 0px 10px gold; text-align: center;">Name: ${name}, Artist: ${
+            currentSong.artist
+        }, Time: ${formatTime(time)}</p>
+        <div style="display: flex; justify-content: space-around;"> <!-- Wrapper for buttons -->
+            <button class="playButton${
+                index + 1
+            }" onclick="playFavoriteSong(${songIndex}, ${time})" style="background-color: black; border: 3px groove gold; box-shadow: 0px 0px 10px gold; padding: 10px; border-radius: 50%; margin-bottom: 10px;">
+                <i class="material-icons" style="color: green; margin-left: 1px;">play_arrow</i>
+            </button>
+
+            <button class="editButton${
+                index + 1
+            }" onclick="editFavoriteSong(${index})" style="background-color: black; border: 3px groove gold; box-shadow: 0px 0px 10px gold; padding: 10px; border-radius: 50%; margin-bottom: 10px;">
+                <i class="material-icons" style="color: gold; margin-left: 1px;">edit</i>
+            </button>
+
+            <button class="deleteButton${
+                index + 1
+            }" onclick="deleteFavoriteSong(${index})" style="background-color: black; border: 3px groove gold; box-shadow: 0px 0px 10px gold; padding: 10px; border-radius: 50%; margin-bottom: 10px;">
+                <i class="material-icons" style="color: red; margin-left: 1px;">delete</i>
+            </button>
+        </div>
+    `;
+                    favoriteSongsList.appendChild(listItem);
+                });
+
+                modal.style.display = "block";
+
+                // Close the modal when the close button is clicked
+                let closeBtn = modal.querySelector(".close1");
+                closeBtn.onclick = function () {
+                    modal.style.display = "none";
+                };
+            }
+
+            // Function to play a favorite song at the specified time
+            function playFavoriteSong(songIndex, timeInSeconds) {
+                musicIndex = songIndex;
+                loadMusic(musicIndex);
+                mainAudio.currentTime = timeInSeconds;
+                playMusic();
+                playingSong();
+                let modal = document.getElementById("favoriteSongsModal");
+                modal.style.display = "none";
+            }
+
+            // Function to format time in MM:SS format
+            function formatTime(timeInSeconds) {
+                const minutes = Math.floor(timeInSeconds / 60);
+                const seconds = Math.floor(timeInSeconds % 60);
+                return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+            }
+            // Function to delete a favorite song
+            function deleteFavoriteSong(index) {
+                favoriteSongs.splice(index, 1);
+                showFavoriteSongs(); // Refresh the display after deletion
+            }
+            // Function to save favorite songs to local storage
+            function saveFavoriteSongs() {
+                localStorage.setItem(
+                    "favoriteSongs",
+                    JSON.stringify(favoriteSongs)
+                );
+            }
+
+            // Function to load favorite songs from local storage
+            function loadFavoriteSongs() {
+                let savedFavoriteSongs = localStorage.getItem("favoriteSongs");
+                if (savedFavoriteSongs) {
+                    favoriteSongs = JSON.parse(savedFavoriteSongs);
+                }
+            }
+
+            // Call loadFavoriteSongs when the page loads to load saved favorite songs
+            window.addEventListener("load", loadFavoriteSongs);
+
+            // Function to delete a favorite song
+            function deleteFavoriteSong(index) {
+                favoriteSongs.splice(index, 1);
+                saveFavoriteSongs(); // Save favorite songs after deletion
+                showFavoriteSongs(); // Refresh the display after deletion
+            }
+            // Function to edit the name of a favorite song
+            let editingIndex; // Global variable to keep track of which song is being edited
+
+            function editFavoriteSong(index) {
+                editingIndex = index;
+                showEditModal(index);
+            }
+            // Function to show the edit modal
+            function showEditModal(index) {
+                const modal = document.getElementById("editModal");
+                const songNameInput = document.getElementById("songName");
+                songNameInput.value = favoriteSongs[index].name;
+                modal.style.display = "block";
+            }
+
+            // Function to save the edited song name
+            function saveEditedSong() {
+                const newName = document
+                    .getElementById("songName")
+                    .value.trim();
+                if (newName !== "") {
+                    favoriteSongs[editingIndex].name = newName;
+                    saveFavoriteSongs(); // Save favorite songs after editing
+                    showFavoriteSongs(); // Refresh the display after editing
+                    closeEditModal();
+                }
+            }
+
+            // Function to close the edit modal
+            function closeEditModal() {
+                const modal = document.getElementById("editModal");
+                modal.style.display = "none";
+            }
+            // Function to close the modal for renaming the song
+            function closeRenameModal() {
+                let renameModal = document.getElementById("renameModal");
+                renameModal.style.display = "none";
+            }
+
+            // Add event listener to the exit button for renaming the song
+            const exitRenameButton =
+                document.getElementById("exitRenameButton");
+            exitRenameButton.addEventListener("click", closeRenameModal);
+        </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Select the checkbox and the icon
+                const toggleButton = document.getElementById("toggleButton");
+                const queueIcon = document.getElementById("queueIcon");
+
+                // Add event listener to the checkbox
+                toggleButton.addEventListener("change", function () {
+                    if (toggleButton.checked) {
+                        // Change the icon to exit_to_app when checkbox is checked
+                        queueIcon.textContent = "exit_to_app";
+                    } else {
+                        // Change the icon back to queue_music when checkbox is unchecked
+                        queueIcon.textContent = "queue_music";
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
