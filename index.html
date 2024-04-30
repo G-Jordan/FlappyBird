@@ -771,6 +771,59 @@
             }
 
             /* Add other styles for the wrapper as needed */
+            .loading-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 1; /* Start with full opacity */
+  transition: opacity 1s ease; /* Add transition for opacity */
+}
+
+.loading-page.loading-complete {
+  opacity: 0;
+  pointer-events: none; /* Disable pointer events while the loading page is invisible */
+  transition: opacity 1s ease; /* Add transition for opacity */
+}
+
+.main-content {
+  position: relative; /* Ensure proper stacking context */
+}
+
+.loading-page.loading-complete {
+  opacity: 0;
+  transition: opacity 1s ease; /* Add transition for opacity */
+  animation: hideLoadingPage 1s forwards; /* Use animation to remove the loading page from DOM after fade out */
+}
+
+@keyframes hideLoadingPage {
+  to {
+    visibility: hidden;
+  }
+}
+
+
+.loading-animation {
+  width: 100px;
+  height: 100px;
+  border: 5px solid gold;
+  border-top-color: lime;
+  box-shadow: 0 0 10px gold;
+  border-radius: 50%;
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
         </style>
         <script
             async
@@ -796,6 +849,12 @@
     </head>
 
     <body>
+      <div class="loading-page">
+       <h3 style="display: flex; position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%);">Please Wait!!</h3>
+    <div class="loading-animation"></div>
+        <h3 style="position: absolute; top: 67%; left: 50%; transform: translate(-50%, 50%);">Website is Loading...</h3>
+  </div>
+  <div class="main-content">
         <div class="center-container">
             <div class="image-container">
                 <img
@@ -1873,6 +1932,10 @@
             }
         </script>
         <script>
+       window.addEventListener('load', function() {
+  // Add class to indicate loading is complete
+  document.querySelector('.loading-page').classList.add('loading-complete');
+}); 
             function showModal() {
                 document.getElementById("modal").style.display = "block";
             }
@@ -2066,5 +2129,6 @@
                 });
             });
         </script>
+        </div>
     </body>
-</html>
+    </html>
